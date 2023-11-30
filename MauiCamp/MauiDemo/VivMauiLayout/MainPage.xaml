@@ -11,11 +11,12 @@
         HeightRequest="185"
         SemanticProperties.Description="dot net bot in a race car number eight"
         Source="dotnet_bot.png" />
+      
       <Button
         x:Name="SLayoutBtn"
         Clicked="SLayoutBtn_Clicked"
         HorizontalOptions="Center"
-        SemanticProperties.Hint="Opens StackLayout"
+        SemanticProperties.Hint="Open HStack"
         Text="StackLayout" />
 
     </VerticalStackLayout>
