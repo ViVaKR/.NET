@@ -24,12 +24,6 @@ namespace VivAnimate.Effects
     }
 }
 
-
-// 0001
-// 0010
-// 0100
-// 1000
-
 // 변수 선언
 // VColor colr = VColor.Black | VColor.Green | VColor.Blue
 

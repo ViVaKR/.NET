@@ -8,10 +8,8 @@ namespace VivAnimate.Effects.Colors
             get { return EffectInteractions.COLOR; }
         }
 
-        public int GetCurrentValue(Control control)
-        {
-            return control.BackColor.ToArgb();
-        }
+        public int GetCurrentValue(Control control) => control.BackColor.ToArgb();
+
 
         public void SetValue(Control control, int originalValue, int valueToReach, int newValue)
         {
@@ -21,8 +19,7 @@ namespace VivAnimate.Effects.Colors
             double absoluteChangePerc = (double)((originalValue - newValue) * 100) / actualValueChange;
             absoluteChangePerc = Math.Abs(absoluteChangePerc);
 
-            if (absoluteChangePerc > 100.0f)
-                return;
+            if (absoluteChangePerc > 100.0f) return;
 
             Color originalColor = Color.FromArgb(originalValue);
             Color newColor = Color.FromArgb(valueToReach);
@@ -36,15 +33,11 @@ namespace VivAnimate.Effects.Colors
             Console.WriteLine(control.BackColor + " " + newColor);
         }
 
-        public int GetMinimumValue(Control control)
-        {
-            return Color.Black.ToArgb();
-        }
+        public int GetMinimumValue(Control control)=> Color.Black.ToArgb();
+        
 
-        public int GetMaximumValue(Control control)
-        {
-            return Color.White.ToArgb();
-        }
+        public int GetMaximumValue(Control control)=>Color.White.ToArgb();
+        
 
         private int Interpolate(int val1, int val2, double changePerc)
         {

@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VivMauiApp", "VivMauiApp\VivMauiApp.csproj", "{FD6DF922-8A3C-46A6-8A62-D408D8E98041}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivMauiLayout", "VivMauiLayout\VivMauiLayout.csproj", "{5F393222-624F-45A1-8FCC-53FD2DA881C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VivMauiLayout", "VivMauiLayout\VivMauiLayout.csproj", "{5F393222-624F-45A1-8FCC-53FD2DA881C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts", "Contacts\Contacts.csproj", "{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,18 @@ Global
 		{5F393222-624F-45A1-8FCC-53FD2DA881C5}.Release|ARM64.ActiveCfg = Release|Any CPU
 		{5F393222-624F-45A1-8FCC-53FD2DA881C5}.Release|ARM64.Build.0 = Release|Any CPU
 		{5F393222-624F-45A1-8FCC-53FD2DA881C5}.Release|ARM64.Deploy.0 = Release|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Debug|ARM64.Deploy.0 = Debug|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Release|ARM64.Build.0 = Release|Any CPU
+		{AE36D336-760A-4A0B-ACFA-EC3650EEEDA0}.Release|ARM64.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

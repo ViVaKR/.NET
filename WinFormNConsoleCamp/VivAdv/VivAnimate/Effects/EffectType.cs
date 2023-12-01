@@ -2,18 +2,17 @@
 {
     public enum EffectType
     {
-        BottomAnchoreHeight,
-        Fold,
-        HorizontalFold,
-        LeftAnchoredWidth,
-        RightAnchoredWidth,
-        TopAnchoreHeight,
-        VerticalFold,
-        XLocation,
-        YLocation,
-        ColorChannelShift,
-        ColorShift,
+        Drop,
+        ToLeft,
+        ToCenter,
+        RightFade,
+        TopFade,
+        LeftFade,
+        BottomFade,
+        FormFade,
+        Channel,
         ControlFade,
-        FormFade
+        FormClose
+
     }
 }

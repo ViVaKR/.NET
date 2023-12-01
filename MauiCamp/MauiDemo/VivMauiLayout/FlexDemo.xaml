@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="VivMauiLayout.FlexDemo"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="FlexDemo">
+    <FlexLayout Direction="Column">
+        <Label
+            BackgroundColor="Red"
+            FontSize="18"
+            HorizontalTextAlignment="Center"
+            Text="HEADER"
+            TextColor="White"
+            VerticalTextAlignment="Center" />
+        <FlexLayout FlexLayout.Grow="1">
+            <Label
+                BackgroundColor="Khaki"
+                FlexLayout.Grow="1"
+                FontSize="18"
+                HorizontalTextAlignment="Center"
+                Text="CONTENT"
+                VerticalTextAlignment="Center" />
+            <BoxView
+                FlexLayout.Basis="50"
+                FlexLayout.Order="-1"
+                Color="Blue" />
+            <BoxView FlexLayout.Basis="50" Color="Green" />
+
+        </FlexLayout>
+        <Label
+            BackgroundColor="Red"
+            FontSize="18"
+            HorizontalTextAlignment="Center"
+            Text="FOOTER"
+            TextColor="White"
+            VerticalTextAlignment="Center" />
+    </FlexLayout>
+</ContentPage>

@@ -16,44 +16,28 @@ namespace VivAnimate.Animators
                     int delay,
                     bool reverse = false, int loops = 1)
         {
-            //used to calculate animation frame based on how much time has effectively passed
             var stopwatch = new Stopwatch();
-
-            //used to cancel animation
             var cancelTokenSource = new CancellationTokenSource();
-
-            //used to access animation progress
             var animationStatus = new AnimationStatus(cancelTokenSource, stopwatch);
-
-            //This timer allows delayed start. Control's state checks and evaluations are delayed too.
-            new System.Threading.Timer((state) =>
+            _ = new System.Threading.Timer((state) =>
             {
-                //is there anything to do here?
                 int originalValue = iEffect.GetCurrentValue(control);
                 if (originalValue == valueToReach)
                 {
                     animationStatus.IsCompleted = true;
                     return;
                 }
-
-                //upper bound check
                 int maxVal = iEffect.GetMaximumValue(control);
                 if (valueToReach > maxVal)
                 {
-                    string msg = string.Format("Value must be lesser than the maximum allowed. " +
-                        "Max: {0}, provided value: {1}", maxVal, valueToReach);
-
-                    throw new ArgumentException(msg, "valueToReach");
+                    string message = $"최대값: {maxVal} 이하로 설정하세요. {valueToReach}";
+                    throw new ArgumentException(message, "값 설정오류발생");
                 }
-
-                //lower bound check
                 int minVal = iEffect.GetMinimumValue(control);
                 if (valueToReach < iEffect.GetMinimumValue(control))
                 {
-                    string msg = string.Format("Value must be greater than the minimum allowed. " +
-                        "Min: {0}, provided value: {1}", minVal, valueToReach);
-
-                    throw new ArgumentException(msg, "valueToReach");
+                    string message = $"최대값: {minVal} 이하로 설정하세요. {valueToReach}";
+                    throw new ArgumentException(message, "값 설정오류발생");
                 }
 
                 bool reversed = false;
@@ -61,19 +45,16 @@ namespace VivAnimate.Animators
 
                 int actualValueChange = Math.Abs(originalValue - valueToReach);
 
-                System.Timers.Timer animationTimer = new System.Timers.Timer();
-                //adjust interval (naive, edge cases can mess up)
-                animationTimer.Interval = (duration > actualValueChange) ?
-                    (duration / actualValueChange) : actualValueChange;
-
-                //because of naive interval calculation this is required
-                if (iEffect.Interaction == EffectInteractions.COLOR)
-                    animationTimer.Interval = 10;
-
-                //main animation timer tick
-                animationTimer.Elapsed += (o, e) =>
+                System.Timers.Timer animationTimer = new()
                 {
-                    //cancellation support
+                    Interval = (duration > actualValueChange) ?
+                    (duration / actualValueChange) : actualValueChange
+                };
+                if (iEffect.Interaction == EffectInteractions.COLOR) animationTimer.Interval = 10;
+
+
+                animationTimer.Elapsed += (s, e) =>
+                {
                     if (cancelTokenSource.Token.IsCancellationRequested)
                     {
                         animationStatus.IsCompleted = true;
@@ -82,7 +63,6 @@ namespace VivAnimate.Animators
                         return;
                     }
 
-                    //main logic
                     bool increasing = originalValue < valueToReach;
 
                     int minValue = Math.Min(originalValue, valueToReach);
@@ -92,7 +72,7 @@ namespace VivAnimate.Animators
                     if (!increasing)
                         newValue = (originalValue + valueToReach) - newValue - 1;
 
-                    control.BeginInvoke(new MethodInvoker(() =>
+                    control.Invoke(new MethodInvoker(() =>
                     {
                         iEffect.SetValue(control, originalValue, valueToReach, newValue);
 
@@ -125,7 +105,6 @@ namespace VivAnimate.Animators
                     }));
                 };
 
-                //start
                 stopwatch.Start();
                 animationTimer.Start();
 

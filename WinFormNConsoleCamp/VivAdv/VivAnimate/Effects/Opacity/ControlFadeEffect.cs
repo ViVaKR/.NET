@@ -13,20 +13,20 @@ namespace VivAnimate.Effects.Opacity
         private class State
         {
             public int Opacity { get; set; }
-            public Graphics ParentGraphics { get; set; }
+            public Graphics? ParentGraphics { get; set; }
             public Rectangle PreviousBounds { get; set; }
-            public Bitmap Snapshot { get; set; }
+            public Bitmap? Snapshot { get; set; }
         }
 
-        private static Dictionary<Control, State> _controlCache
-            = new Dictionary<Control, State>();
+        private static readonly Dictionary<Control, State> _controlCache = [];
 
         public ControlFadeEffect(Control control)
         {
             if (!_controlCache.ContainsKey(control))
             {
-                var parentGraphics = control.Parent.CreateGraphics();
-                parentGraphics.CompositingQuality = CompositingQuality.HighSpeed;
+                var parentGraphics = control.Parent?.CreateGraphics();
+                if (parentGraphics != null)
+                    parentGraphics.CompositingQuality = CompositingQuality.HighSpeed;
 
                 var state = new State()
                 {
@@ -51,11 +51,11 @@ namespace VivAnimate.Effects.Opacity
             //invalidate region no more in use
             var region = new Region(state.PreviousBounds);
             region.Exclude(control.Bounds);
-            control.Parent.Invalidate(region);
+            control.Parent?.Invalidate(region);
 
             //I get real-time snapshot (no cache) so i can mix animations
             var snapshot = control.GetSnapshot();
-            if (snapshot != null)
+            if (snapshot != null && control.Parent != null)
             {
                 snapshot = (Bitmap)snapshot.ChangeOpacity(newValue);
                 //avoid refresh and thus flickering: blend parent's background with snapshot
@@ -73,17 +73,16 @@ namespace VivAnimate.Effects.Opacity
             control.Visible = false;
             state.Opacity = newValue;
 
-            if (newValue > 0)
+            if (newValue > 0 && control.Parent != null)
             {
-                var rect = control.Parent.RectangleToClient(
-                    control.RectangleToScreen(control.ClientRectangle));
+                Rectangle r = control.Parent.RectangleToClient(control.RectangleToScreen(control.ClientRectangle));
 
                 if (state.Snapshot != null)
-                    state.ParentGraphics.DrawImage(state.Snapshot, rect);
+                    state.ParentGraphics?.DrawImage(state.Snapshot, new PointF(r.X, r.Y));
             }
             else
             {
-                control.Parent.Invalidate();
+                control.Parent?.Invalidate();
             }
         }
 
@@ -128,17 +127,16 @@ namespace VivAnimate.Effects.Opacity
         private class State
         {
             public int Opacity { get; set; }
-            public Graphics ParentGraphics { get; set; }
+            public Graphics? ParentGraphics { get; set; }
             public Rectangle PreviousBounds { get; set; }
-            public Bitmap Snapshot { get; set; }
+            public Bitmap? Snapshot { get; set; }
         }
 
-        private static Dictionary<Control, State> _controlCache
-            = new Dictionary<Control, State>();
+        private static Dictionary<Control, State> _controlCache = [];
 
         public ControlFadeEffect2(Control control)
         {
-            if (!_controlCache.ContainsKey(control))
+            if (!_controlCache.ContainsKey(control) && control.Parent != null)
             {
                 var parentGraphics = control.Parent.CreateGraphics();
                 parentGraphics.CompositingQuality = CompositingQuality.HighSpeed;
@@ -160,29 +158,39 @@ namespace VivAnimate.Effects.Opacity
 
         public void SetValue(Control control, int originalValue, int valueToReach, int newValue)
         {
+
             var state = _controlCache[control];
 
             //invalidate region no more in use
             var region = new Region(state.PreviousBounds);
             region.Exclude(control.Bounds);
-            control.Parent.Invalidate(region);
+
+            control.Parent?.Invalidate(region);
 
             var form = control.FindForm();
-            var formRelativeCoords = form.RectangleToClient(control.RectangleToScreen(control.ClientRectangle));
+            if (form == null) return;
+            RectangleF formRelativeCoords;
+            formRelativeCoords = form.RectangleToClient(control.RectangleToScreen(control.ClientRectangle));
 
             //I get real-time snapshot (no cache) so i can mix animations
             var controlSnapshot = control.GetSnapshot();
+            Bitmap? formSnapshot = null;
             if (controlSnapshot != null)
             {
                 controlSnapshot = (Bitmap)controlSnapshot.ChangeOpacity(newValue);
 
-
-                var formSnapshot = form.GetFormBorderlessSnapshot().Clone(formRelativeCoords, PixelFormat.DontCare);
+                formSnapshot = form?.GetFormBorderlessSnapshot().Clone(formRelativeCoords, PixelFormat.DontCare);
 
                 //avoid refresh and thus flickering: blend parent form snapshot with control snapshot
-                var bgBlendedSnapshot = BlendImages(formSnapshot, controlSnapshot);
-                //bgBlendedSnapshot.Save( @"C:\Users\Sampietro.Mauro\Documents\_root\bmp" + newValue + ".bmp" );
-                state.Snapshot = bgBlendedSnapshot;
+
+                Bitmap? bgBlendedSnapshot = null;
+                if (formSnapshot != null)
+                    bgBlendedSnapshot = BlendImages(formSnapshot, controlSnapshot);
+
+
+                //bgBlendedSnapshot.Save( @"~\Documents\_root\bmp" + newValue + ".bmp" );
+                if (bgBlendedSnapshot != null)
+                    state.Snapshot = bgBlendedSnapshot;
             }
             state.PreviousBounds = control.Bounds;
 
@@ -195,18 +203,13 @@ namespace VivAnimate.Effects.Opacity
             control.Visible = false;
             state.Opacity = newValue;
 
-            if (newValue > 0)
+            if (newValue > 0 && state.Snapshot != null)
             {
-                //var rect = control.Parent.RectangleToClient(
-                //    control.RectangleToScreen( control.ClientRectangle ) );
-
-                form.CreateGraphics().DrawImage(state.Snapshot, formRelativeCoords);
-                //if( state.Snapshot != null )
-                //    state.ParentGraphics.DrawImage( state.Snapshot, rect );
+                form?.CreateGraphics().DrawImage(state.Snapshot, formRelativeCoords);
             }
             else
             {
-                control.Parent.Invalidate();
+                control.Parent?.Invalidate();
             }
         }
 

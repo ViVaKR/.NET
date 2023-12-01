@@ -82,11 +82,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\VisualEffects\VisualEffects.csproj">
-      <Project>{88c2e4d2-1237-4616-9f74-2d0a4af06009}</Project>
-      <Name>VisualEffects</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

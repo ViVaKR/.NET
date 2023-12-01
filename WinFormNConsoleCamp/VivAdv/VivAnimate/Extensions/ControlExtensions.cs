@@ -8,18 +8,19 @@ namespace VivAnimate.Extensions
             if (initialControl != null)
             {
                 var ctrlSelected = initialControl.SelectNextControl(initialControl, true, true, false, false);
+                if(initialControl.Parent != null)
                 if (!ctrlSelected)
                     SelectNextControl(initialControl.Parent);
             }
         }
 
-        public static Bitmap GetSnapshot(this Control control)
+        public static Bitmap? GetSnapshot(this Control control)
         {
             if (control.Width <= 0 || control.Height <= 0)
                 return null;
 
-            Bitmap image = new Bitmap(control.Width, control.Height);
-            Rectangle targetBounds = new Rectangle(0, 0, control.Width, control.Height);
+            Bitmap image = new(control.Width, control.Height);
+            Rectangle targetBounds = new(0, 0, control.Width, control.Height);
 
             control.DrawToBitmap(image, targetBounds);
             return image;
@@ -33,7 +34,7 @@ namespace VivAnimate.Extensions
 
                 Point point = window.PointToScreen(Point.Empty);
 
-                Bitmap target = new Bitmap(window.ClientSize.Width, window.ClientSize.Height);
+                Bitmap target = new(window.ClientSize.Width, window.ClientSize.Height);
                 using (Graphics g = Graphics.FromImage(target))
                 {
                     var srcRect = new Rectangle(point.X - window.Location.X,

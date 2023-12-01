@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VivAnimate.Extensions
 {
@@ -13,27 +10,22 @@ namespace VivAnimate.Extensions
         public static bool IsBlank(this Image img, int threshold, int checkOnePixelEveryN = 1)
         {
             if (checkOnePixelEveryN <= 0)
-                throw new ArgumentException("Must check at least one pixel every 1 pixel (every pixel)");
+                throw new ArgumentException("최소 1픽셀 이상을 확인해야 합니다.");
 
             return img.GetStandardDeviation() < threshold;
         }
 
-        /// <summary>
-        /// Get the standard deviation of pixel values.
-        /// </summary>
-        /// <param name="imageFileName">Name of the image file.</param>
-        /// <returns>Standard deviation.</returns>
         private static double GetStandardDeviation(this Image img, int checkOnePixelEveryN = 1)
         {
             if (checkOnePixelEveryN <= 0)
-                throw new ArgumentException("Must check at least one pixel every 1 pixel (every pixel)");
+                throw new ArgumentException("최소 1픽셀 이상을 확인해야 합니다.");
 
             double total = 0, totalVariance = 0;
             int count = 1;
             double stdDev = 0;
 
             // First get all the bytes
-            using (Bitmap bmp = new Bitmap(img))
+            using (Bitmap bmp = new(img))
             {
                 BitmapData bmData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, bmp.PixelFormat);
                 int stride = bmData.Stride;
@@ -67,11 +59,7 @@ namespace VivAnimate.Extensions
             return stdDev;
         }
 
-        /// <summary>
-        /// Resize an image by a percentage factor
-        /// </summary>
-        /// <param name="image">Source image</param>
-        /// <returns>Scaled image</returns>
+
         public static Image ScaleByPercentage(this Image image, int percent)
         {
             float nPercent = ((float)percent / 100);
@@ -79,7 +67,7 @@ namespace VivAnimate.Extensions
             int destWidth = (int)(image.Width - (image.Width * nPercent));
             int destHeight = (int)(image.Height - (image.Height * nPercent));
 
-            Bitmap bmp = new Bitmap(destWidth, destHeight, PixelFormat.Format24bppRgb);
+            Bitmap bmp = new(destWidth, destHeight, PixelFormat.Format24bppRgb);
             bmp.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
             using (Graphics graphics = Graphics.FromImage(bmp))
@@ -97,7 +85,7 @@ namespace VivAnimate.Extensions
 
         public static Image Resize(this Image image, Size newSize)
         {
-            Bitmap bmp = new Bitmap(newSize.Width, newSize.Height);
+            Bitmap bmp = new(newSize.Width, newSize.Height);
             using (var gx = Graphics.FromImage((Image)bmp))
             {
                 gx.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -115,15 +103,14 @@ namespace VivAnimate.Extensions
             {
                 var colorMatrix = new ColorMatrix
                 (
-                    new float[][]
-                    {
-                        new float[] { 0.5f, 0.5f, 0.5f, 0, 0 },
-                        new float[] { 0.5f, 0.5f, 0.5f, 0, 0 },
-                        new float[] { 0.5f, 0.5f, 0.5f, 0, 0 },
-                        new float[] { 0, 0, 0, 1, 0, 0 },
-                        new float[] { 0, 0, 0, 0, 1, 0 },
-                        new float[] { 0, 0, 0, 0, 0, 1 }
-                    }
+                    [
+                        [0.5f, 0.5f, 0.5f, 0, 0],
+                        [0.5f, 0.5f, 0.5f, 0, 0],
+                        [0.5f, 0.5f, 0.5f, 0, 0],
+                        [0, 0, 0, 1, 0, 0],
+                        [0, 0, 0, 0, 1, 0],
+                        [0, 0, 0, 0, 0, 1]
+                    ]
                 );
 
                 var imageAttrs = new ImageAttributes();
@@ -136,36 +123,18 @@ namespace VivAnimate.Extensions
             return bmp;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="img"></param>
-        /// <param name="opacity">A value between 0 (full transparency) and 100 (full opacity)</param>
-        /// <returns></returns>
         public static Image ChangeOpacity(this Image image, int opacity)
         {
             opacity = opacity < 0 ? 0 : opacity;
             opacity = opacity > 100 ? 100 : opacity;
 
-            //create a Bitmap the size of the image provided  
-            Bitmap bmp = new Bitmap(image.Width, image.Height);
-
-            //create a graphics object from the image  
+            Bitmap bmp = new (image.Width, image.Height);
             using (Graphics gfx = Graphics.FromImage(bmp))
             {
-                //create a color matrix object  
                 ColorMatrix matrix = new ColorMatrix();
-
-                //set the opacity  
                 matrix.Matrix33 = ((float)opacity) / 100;
-
-                //create image attributes  
                 ImageAttributes attributes = new ImageAttributes();
-
-                //set the color (opacity) of the image  
                 attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-
-                //now draw the image  
                 gfx.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
             }
 
@@ -175,26 +144,24 @@ namespace VivAnimate.Extensions
         public static Image ToBlackWhite(this Image image, float threshold = 0.7f)
         {
             var outImage = new Bitmap(image.Width, image.Height, PixelFormat.Format32bppArgb);
-            using (Graphics gr = Graphics.FromImage(outImage))
-            {
-                var grayMatrix = new ColorMatrix(new float[][]
-                {
-                    new float[] { 0.299f, 0.299f, 0.299f, 0, 0 },
-                    new float[] { 0.587f, 0.587f, 0.587f, 0, 0 },
-                    new float[] { 0.114f, 0.114f, 0.114f, 0, 0 },
-                    new float[] { 0,      0,      0,      1, 0 },
-                    new float[] { 0,      0,      0,      0, 1 }
-                });
+            using Graphics gr = Graphics.FromImage(outImage);
+            var grayMatrix = new ColorMatrix(
+            [
+                [0.299f, 0.299f, 0.299f, 0, 0],
+                [0.587f, 0.587f, 0.587f, 0, 0],
+                [0.114f, 0.114f, 0.114f, 0, 0],
+                [0, 0, 0, 1, 0],
+                [0, 0, 0, 0, 1]
+            ]);
 
-                var ia = new ImageAttributes();
-                ia.SetColorMatrix(grayMatrix);
-                ia.SetThreshold(threshold);
+            var ia = new ImageAttributes();
+            ia.SetColorMatrix(grayMatrix);
+            ia.SetThreshold(threshold);
 
-                var rc = new Rectangle(0, 0, image.Width, image.Height);
-                gr.DrawImage(image, rc, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, ia);
+            var rc = new Rectangle(0, 0, image.Width, image.Height);
+            gr.DrawImage(image, rc, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, ia);
 
-                return outImage;
-            }
+            return outImage;
         }
 
         public static MemoryStream ToStream(this Image image, ImageFormat format)
@@ -208,7 +175,7 @@ namespace VivAnimate.Extensions
 
         public static bool Equals(this Bitmap bmp1, Bitmap bmp2)
         {
-            Rectangle rect = new Rectangle(0, 0, bmp1.Width, bmp1.Height);
+            Rectangle rect = new(0, 0, bmp1.Width, bmp1.Height);
             BitmapData bmpData1 = bmp1.LockBits(rect, ImageLockMode.ReadOnly, bmp1.PixelFormat);
             BitmapData bmpData2 = bmp2.LockBits(rect, ImageLockMode.ReadOnly, bmp2.PixelFormat);
 

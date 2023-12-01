@@ -4,8 +4,8 @@
     {
         public int GetCurrentValue(Control control)
         {
-            if (!(control is Form))
-                throw new Exception("Fading effect can be applied only on forms");
+            if (control is not Form)
+                throw new Exception("폼 컨트롤을 확인하세요.");
 
             var form = (Form)control;
 
@@ -15,7 +15,7 @@
         public void SetValue(Control control, int originalValue, int valueToReach, int newValue)
         {
             if (!(control is Form))
-                throw new Exception("Fading effect can be applied only on forms");
+                throw new Exception("폼 컨트롤을 확인하세요.");
 
             var form = (Form)control;
             form.Opacity = ((float)newValue) / 100;

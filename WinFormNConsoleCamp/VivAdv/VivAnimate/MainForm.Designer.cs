@@ -28,10 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            SuspendLayout();
+            // 
+            // MainForm
+            // 
+            AutoScaleDimensions = new SizeF(17F, 38F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1500, 793);
+            Font = new Font("IBM Plex Sans KR", 10.875F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            Name = "MainForm";
+            Text = "PlayGround";
+            ResumeLayout(false);
         }
 
         #endregion

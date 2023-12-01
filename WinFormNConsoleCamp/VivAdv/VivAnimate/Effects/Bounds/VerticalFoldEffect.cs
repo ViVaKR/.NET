@@ -9,9 +9,6 @@
 
         public void SetValue(Control control, int originalValue, int valueToReach, int newValue)
         {
-            //changing location and size independently can cause flickering:
-            //change bounds property instead.
-
             var center = new Point((control.Left + control.Right) / 2, control.Top);
             var size = new Size(newValue, control.Height);
             var location = new Point(center.X - (newValue / 2), control.Top);
