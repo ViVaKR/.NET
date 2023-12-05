@@ -1,4 +1,6 @@
-﻿namespace MazeGame.Entities
+﻿using MazeGame.Libs;
+
+namespace MazeGame.Entities
 {
     public class Point
     {

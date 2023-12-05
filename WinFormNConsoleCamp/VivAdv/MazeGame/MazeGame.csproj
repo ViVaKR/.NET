@@ -10,9 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Assets\Avata_2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Assets\Avata.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

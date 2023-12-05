@@ -9,8 +9,10 @@ namespace MazeGame
         static void Main()
         {
             if (Environment.OSVersion.Version.Major >= 6) SetProcessDPIAware();
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            // Application.Run(new MainForm());
+            Application.Run(new MazePlayForm());
         }
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]

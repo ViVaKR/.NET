@@ -9,13 +9,9 @@ namespace VivAnimate
         {
             if (Environment.OSVersion.Version.Major >= 6) SetProcessDPIAware();
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm
+            Application.Run(new AvoidPooPGame
             {
-                Text = "Main",
-                Width = 1600,
-                Height = 1600,
-                Font = new Font("IBM Plex Sans KR", 24, FontStyle.Regular),
-                StartPosition = FormStartPosition.CenterScreen
+                WindowState = FormWindowState.Maximized
             });
         }
 

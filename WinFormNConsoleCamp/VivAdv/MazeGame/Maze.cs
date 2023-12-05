@@ -1,16 +1,17 @@
 ﻿
+using System.Diagnostics;
+
 namespace MazeGame
 {
     public class Maze
     {
-
         public int _count;
-        private bool[,] visited;
+        private readonly bool[,] visited;
         public Point current;
         public int[] playerPositions = [1, 1];
-        private Point[] dirs;
-        public Random random = new(new Guid().GetHashCode());
+        private readonly Point[] fourDirections;
         public readonly int[,] map;
+        public List<Rectangle> locations;
 
         private double wallSize;
         public double WallSize
@@ -26,14 +27,17 @@ namespace MazeGame
 
         public Maze(int count, int size)
         {
+            locations = [];
+
             _count = count;
 
             WallSize = size / count;
 
             map = new int[_count, _count];
+
             visited = new bool[_count, _count];
 
-            dirs = [new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)];
+            fourDirections = [new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)];
 
             InitiallizeMaze();
         }
@@ -43,15 +47,16 @@ namespace MazeGame
             if (visited == null) return;
             for (int col = 0; col < _count - 1; col++)
             {
-                for (int row = 0; row < _count -1; row++)
+                for (int row = 0; row < _count - 1; row++)
                 {
                     visited[col, row] = false;
                     map[col, row] = 1;
                 }
             }
         }
-        private List<T> ShuffleList<T>(List<T> list)
+        private static List<T> ShuffleList<T>(List<T> list)
         {
+            Random random = new();
             for (int i = 0; i < list.Count; i++)
             {
                 int j = random.Next(i, list.Count);
@@ -71,28 +76,27 @@ namespace MazeGame
         private void GenerateMaze(int col, int row)
         {
             if (visited == null || map == null) return;
+
             visited[col, row] = true;
             map[col, row] = 0;
 
-            var directions = ShuffleList(new List<int> { 0, 1, 2, 3 });
+            List<int> directions = ShuffleList(new List<int> { 0, 1, 2, 3 });
 
             foreach (int dir in directions)
             {
-                int nextCol = col + dirs[dir].X * 2;
-                int nextRow = row + dirs[dir].Y * 2;
+                int nextCol = col + fourDirections[dir].X * 2;
+                int nextRow = row + fourDirections[dir].Y * 2;
                 if (ToBeOrNotToBeThatIsQnQ(nextCol, nextRow))
                 {
-                    var dx = col + dirs[dir].X;
-                    var dy = row + dirs[dir].Y;
+                    var dx = col + fourDirections[dir].X;
+                    var dy = row + fourDirections[dir].Y;
                     map[dx, dy] = 0;
                     GenerateMaze(nextCol, nextRow);
                 }
             }
         }
 
-        public async Task RunAsync()
-        {
-            await Task.Run(()=> GenerateMaze(1, 1));
-        }
+        public async Task RunAsync() => await Task.Run(() => GenerateMaze(1, 1));
+
     }
 }

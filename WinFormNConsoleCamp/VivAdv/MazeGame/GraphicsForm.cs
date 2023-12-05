@@ -1,4 +1,6 @@
 ﻿using System.Drawing.Drawing2D;
+using MazeGame.Libs;
+using MazeGame.UControls;
 
 namespace MazeGame
 {
@@ -230,6 +232,7 @@ namespace MazeGame
                 case 2:
                     if (clickNumber == 2)
                     {
+                        if (firstPoint == null || currentPosition == null) return;
                         Entities.Line line = new(firstPoint, currentPosition);
                         e.Graphics.DrawLine(extPen, line);
                         double r = firstPoint.DistanceFrom(currentPosition);

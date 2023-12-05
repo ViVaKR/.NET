@@ -1,5 +1,6 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using MazeGame.UControls;
 
 namespace MazeGame
 {
@@ -45,7 +46,7 @@ namespace MazeGame
             }
         }
 
-        private readonly Bitmap? bmp;
+        // private readonly Bitmap? bmp;
         private readonly int count;
         private readonly int mazeSize;
         private Random? random;
@@ -58,7 +59,7 @@ namespace MazeGame
         private List<int[]>? wayToGo;
 
         private int totalTime;
-        private int maxTime = 60 * 3;
+        // private int maxTime = 60 * 3;
         private int maxScore = 15;
 
         private int score;
@@ -172,7 +173,7 @@ namespace MazeGame
             {
                 case 0:
                     {
-                        totalTime = maxTime = 60;
+                        totalTime = 60;
                         maxScore = 15;
                         Score = 0;
                         Maze = null;

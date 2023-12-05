@@ -1,5 +1,7 @@
 ﻿
 
+using MazeGame.Libs;
+
 namespace MazeGame.Entities
 {
     public class Line

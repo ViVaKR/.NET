@@ -21,6 +21,7 @@ namespace VivAnimate
                 return handleParam;
             }
         }
+
         private readonly GroupBox box; // 버튼 컨테이너
         private readonly VButton? button; // 버튼 사용자 컨트롤
         private VPictureBox? player; // 사진박스 사용자 컨트롤 (플레이어)
@@ -33,7 +34,6 @@ namespace VivAnimate
         private readonly ColorChannelEffect.ColorChannels colorChannel;
         private readonly Timer timer;
         private readonly Label label; // 플레이 시간
-
 
         public MainForm()
         {
@@ -82,7 +82,6 @@ namespace VivAnimate
 
         }
 
-
         private void Timer_Tick(object? sender, EventArgs e)
         {
             label.Text = $"{--time}";
@@ -124,7 +123,6 @@ namespace VivAnimate
             Controls.Add(player);
             player.BringToFront();
         }
-
 
         private async void Button_Click(object? sender, EventArgs e)
         {
@@ -200,14 +198,12 @@ namespace VivAnimate
 
                 EffectsEngine.BounceEaseOut,
                 // EffectsEngine.ElasticEaseOut,
-                // EffectsEngine.ElasticEaseInOut,
+                //  EffectsEngine.ElasticEaseInOut,
                 reachPosition, // 도달할 위치 및 색상값
                 duration, // milliseconds (진행하는 총 시간)
                 delay // milliseconds (시작전 지연시간)
             ));
         }
-
-
 
         private IEffect? GetEffect(EffectType type, Control control)
         {
