@@ -46,16 +46,16 @@ namespace PoopGame
             random = new Random(new Guid().GetHashCode());
 
             Controls.Add(box = new GroupBox { Dock = DockStyle.Right, Width = 250 });
-            box.BackColor = System.Drawing.Color.Transparent;
+            box.BackColor = Color.Transparent;
             box.Controls.Add(btnStart = new UButton("\u2620", 0));
             box.Controls.Add(btnExit = new UButton("\u21DD", 0));
             btnExit.Click += (s, e) => Close();
             btnExit.SendToBack();
 
             btnStart.Click += Play_Click;
-            Controls.Add(ground = new Panel { Dock = DockStyle.Fill, BackColor = System.Drawing.Color.White });
+            Controls.Add(ground = new Panel { Dock = DockStyle.Fill, BackColor = Color.White });
             ground.BringToFront();
-            ground.BackColor = System.Drawing.Color.LightSkyBlue;
+            ground.BackColor = Color.LightSkyBlue;
 
             box.Controls.Add(lblScore = new Label
             {
@@ -66,7 +66,7 @@ namespace PoopGame
                 Height = 200
             }) ;
             lblScore.BringToFront();
-            lblScore.ForeColor = System.Drawing.Color.DarkRed;
+            lblScore.ForeColor = Color.DarkRed;
             lblScore.Text = 0.ToString();
         }
 

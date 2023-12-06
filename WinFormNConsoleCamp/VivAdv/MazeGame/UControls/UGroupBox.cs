@@ -8,7 +8,7 @@
             Width = 300;
             Text = text;
             Name = name;
-
+            BackColor = Color.Transparent;
             Font = new Font(Font.FontFamily, 12, FontStyle.Regular);
             ForeColor = Color.Teal;
             Dock = DockStyle.Right;

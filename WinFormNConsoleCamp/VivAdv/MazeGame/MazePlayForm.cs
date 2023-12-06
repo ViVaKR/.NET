@@ -23,8 +23,8 @@ namespace MazeGame
         public UGroupBox? Box { get; set; }
         private ULabel? labelScore;
         private ULabel? labelMessage;
-        private int maxScore = 15;
-        private readonly int count = 20;
+        private int maxScore = 100;
+        private readonly int count = 30;
         private readonly int groundSize = 2000;
         private int score;
         public int Score
@@ -45,6 +45,7 @@ namespace MazeGame
                     labelScore.Text = value.ToString();
             }
         }
+
         private bool isStopped;
         public bool IsStopped
         {
@@ -52,29 +53,24 @@ namespace MazeGame
             set
             {
                 isStopped = value;
+
+                if (IsStopped)
+                    Invoke(new Action(async () => await RepeatSearch()));
             }
         }
+
         private List<int[]>? WayToGo { get; set; }
-        private readonly List<PictureBox> monsters = [];
-        private readonly Dictionary<int, PictureBox> targets = [];
-        private readonly Dictionary<int[,], Rectangle> rc = [];
+        private List<PictureBox> monsters = [];
+        private Dictionary<int, PictureBox> targets = [];
+        private Dictionary<int[,], Rectangle> rc = [];
         private bool[,]? visited;
         private System.Windows.Forms.Timer? timer;
         private int counter;
-        private List<Point> histories = [];
-        public List<Point> Histories
-        {
-            get => histories;
-            set
-            {
-                histories = value;
-            }
-        }
-        private readonly List<History> history;
+        private List<History>? histories;
 
         public MazePlayForm()
         {
-            SetStyle( // 더블버퍼링
+            SetStyle(
                 ControlStyles.AllPaintingInWmPaint
                 | ControlStyles.UserPaint
                 | ControlStyles.DoubleBuffer, true);
@@ -82,8 +78,6 @@ namespace MazeGame
             InitializeComponent();
 
             WindowState = FormWindowState.Maximized;
-
-            history = [];
 
             CreateControls();
 
@@ -110,12 +104,12 @@ namespace MazeGame
                 new UButton("Back", "Btn_PlayGame10", 10, DockStyle.Top, Button_Click),
                 new UButton("Close", "Btn_PlayGame7", 9, DockStyle.Top, Button_Click),
                 new UButton("Draw Path", "Btn_PlayGame6", 8, DockStyle.Top, Button_Click),
-                new UButton("AI", "Btn_PlayGame5", 7, DockStyle.Top, Button_Click),
-                new UButton("Check", "Btn_PlayGame4", 6, DockStyle.Top, Button_Click),
-                new UButton("Destination", "Btn_PlayGame3", 5, DockStyle.Top, Button_Click),
+                new UButton("-", "Btn_PlayGame5", 7, DockStyle.Top, Button_Click),
+                new UButton("Stop", "Btn_PlayGame4", 6, DockStyle.Top, Button_Click),
+                new UButton("-", "Btn_PlayGame3", 5, DockStyle.Top, Button_Click),
                 new UButton("Clear", "Btn_PlayGame2", 4, DockStyle.Top, Button_Click),
-                new UButton("TARGET", "Btn_PlayGame1", 3, DockStyle.Top, Button_Click),
-                new UButton("-", "BtnPlayMaze", 2, DockStyle.Top, Button_Click, enable: false),
+                new UButton("Monsters", "Btn_PlayGame1", 3, DockStyle.Top, Button_Click),
+                new UButton("Start", "Btn_Start", 2, DockStyle.Top, Button_Click),
                 new UButton("PLAYER", "BtnDrawing", 1, DockStyle.Top, Button_Click),
                 new UButton("MAP", "Btn_PlayMaze", 0, DockStyle.Top, Button_Click),
             });
@@ -124,135 +118,56 @@ namespace MazeGame
             Controls.Add(labelMessage = new ULabel(string.Empty, "Lbl_Timer", DockStyle.Bottom, Color.Gray));
         }
 
-        /// <summary>
-        /// 버튼 클릭 컬렉션
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void Button_Click(object? sender, EventArgs e)
+
+        private async Task RepeatSearch()
         {
-            if (sender is not Button btn) return;
-            if (labelMessage == null) return;
+            if (Player == null || maze == null || timer == null || histories == null) return;
 
-            int tag = Convert.ToInt32(btn.Tag);
-
-            switch (tag)
+            await Task.Run(() =>
             {
-                case 0:
-                    {
-                        Controls.Add(Ground = new UPictureBox(groundSize, Ground_Paint));
-                        maze = new Maze(count, Ground.Height);
-                        await maze.RunAsync();
-                        CenterOfForm();
-                        labelMessage.Text = $"미궁 완성, 플레이어 와 타겟을 생성하세요";
-                    }
-                    break;
-
-                case 1:
-                    {
-                        if (maze == null) return;
-                        Controls.Add(Player = new UPictureBox(Convert.ToInt32(maze.WallSize), Player_Paint));
-                        if (Ground == null) return;
-
-                        Player.Location
-                            = new Point(Ground.Location.X + Convert.ToInt32(maze.WallSize), Ground.Location.Y + Convert.ToInt32(maze.WallSize));
-
-                        Player.BringToFront();
-
-                        Histories.Add(Player.Location);
-
-                        GetTrace();
-
-                        FinalDestination();
-
-                        visited = new bool[count, count];
-                        visited[1, 1] = true;
-                    }
-                    break;
-
-                case 2: break;
-
-                case 3:
-                    for (int i = 0; i < 29; i++)
-                        Goals($"Ball_{i % 10}.png");
-
-                    break;
-                case 4: RemoveMap(); break;
-
-                case 5: FinalDestination(); break;
-
-                case 6:
-
-                    if (WayToGo != null)
-                        foreach (var way in WayToGo)
-                        {
-                            Debug.WriteLine(WayToGo.IndexOf(way) + " " + string.Join(", ", way));
-                        }
-                    break;
-                case 7: // AI
-                    {
-                        
-                        visited = new bool[count, count];
-                        visited[1, 1] = true;
-
-                        timer = new System.Windows.Forms.Timer { Interval = 30 };
-                        timer.Tick += Timer_Tick;
-                        timer?.Start();
-                    }; break;
-                case 8: // Draw Path
-                    {
-                        DrawPath();
-                    }
-                    break;
-                case 9: Close(); return;
-                case 10: // 이잡듯이 찾기
-                    RepeatSearch();
-                    return;
-                default: break;
-            }
-
-        }
-
-        /// <summary>
-        /// 막다른 골목에 막혔을 때 
-        /// 트리구조의 분깃점에서 다시 시작하기
-        /// 버튼 클릭 반자동이나
-        /// 충분히 검토후 완전 자동화 대상
-        /// 즉, 테스트용으로 버튼 클릭시 작동하도록 함
-        /// </summary>
-        private void RepeatSearch()
-        {
-            if (Player == null || maze == null || timer == null) return;
-
-            foreach (var item in history.OrderByDescending(x => x.Id))
-            {
-                timer.Stop();
-                var p = BackTrace(item);
-
-                if (p)
+                foreach (var item in histories.OrderByDescending(x => x.Id))
                 {
-                    maze.playerPositions[0] = item.Col;
-                    maze.playerPositions[1] = item.Row;
-                    Player.Location = item.Point;
+                    timer.Stop();
+                    var intersection = BackTrace(item);
 
-                    timer.Start();
-                    return;
+                    if (intersection)
+                    {
+                        maze.playerPositions[0] = item.Col;
+                        maze.playerPositions[1] = item.Row;
+
+                        Invoke(new MethodInvoker(() =>
+                        {
+                            Player.Location = item.Point;
+                            timer.Start();
+                        }));
+                        return;
+                    }
                 }
-            }
+            });
+
         }
 
-        /// <summary>
-        /// 맵 지우기 (다시하기용)
-        /// </summary>
         private void RemoveMap()
         {
+            isStopped = true;
+            isPath = false;
+            WayToGo?.Clear();
+            WayToGo = [];
             Ground?.Dispose();
+            Ground = null;
             Player?.Dispose();
+            Player = null;
+
+            monsters.Clear();
+            monsters = [];
             targets?.Clear();
-
-
+            targets = [];
+            rc.Clear();
+            rc = [];
+            visited = new bool[count, count];
+            histories?.Clear();
+            histories = [];
             foreach (var item in monsters) item.Dispose();
-
             maxScore = 15;
             Score = 0;
             if (labelMessage != null) labelMessage.Text = "0";
@@ -398,6 +313,8 @@ namespace MazeGame
 
         }
 
+
+        private bool isPath = false;
         /// <summary>
         /// 미로 그리기
         /// </summary>
@@ -435,16 +352,16 @@ namespace MazeGame
                     }
                 }
             }
+
+            if (isPath)
+                DrawPath(e.Graphics);
+
         }
 
-        /// <summary>
-        /// 목표 달성 확인
-        /// </summary>
-        /// <param name="col"></param>
-        /// <param name="row"></param>
         private void IsReachedTarget(int col, int row)
         {
             if (timer == null) return;
+
             if (WayToGo != null && WayToGo.Any(x => x[0] == col && x[1] == row))
             {
                 var item = WayToGo.First(x => x[0] == col && x[1] == row);
@@ -453,23 +370,29 @@ namespace MazeGame
                 if (targets.Any(x => x.Key == idx))
                 {
                     timer.Stop();
-                    PictureBox pb = targets.FirstOrDefault(x => x.Key == idx).Value;
+                    PictureBox target = targets.FirstOrDefault(x => x.Key == idx).Value;
                     targets.Remove(idx);
 
-                    MessageBox.Show("잡았습니다. You Win!!!", "완료");
+                    timer = null;
+                    isStopped = true;
                     if (InvokeRequired)
                     {
                         BeginInvoke(new MethodInvoker(() =>
                         {
-                            pb.Hide();
-                            pb.Dispose();
+                            target.Hide();
+                            target.Dispose();
                             Score++;
+                            if (labelMessage != null)
+                                labelMessage.Text = $"출구 도착";
                         }));
                         return;
                     }
-                    pb.Hide();
-                    pb.Dispose();
+                    target.Hide();
+                    target.Dispose();
                     Score++;
+
+                    if (labelMessage != null)
+                        labelMessage.Text = $"출구 도착";
                 }
             }
         }
@@ -489,36 +412,21 @@ namespace MazeGame
             else
                 Player.Location = next;
 
-            Histories.Add(Player.Location);
+            // Histories.Add(Player.Location);
         }
 
-        /// <summary>
-        /// Ai 자동 무빙 용 타이머
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private async void Timer_Tick(object? sender, EventArgs e) => await RunAiAsync();
 
-        /// <summary>
-        /// 갈수 있는길인지 판정하기
-        /// </summary>
-        /// <param name="col"></param>
-        /// <param name="row"></param>
-        /// <returns></returns>
         private bool IsWay(int col, int row)
         {
-            if (maze == null || visited == null || col < 0 || row < 0 || col > groundSize || row > groundSize) return false;
+            if (maze == null || visited == null || col < 0 || row < 0 || col > groundSize || row > groundSize)
+                return false;
 
             bool check1 = maze.map[col, row] == 0;
             bool check2 = !visited[col, row];
             return check1 && check2;
         }
 
-        /// <summary>
-        /// 이잡듯 막 알로리즘
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
         private bool BackTrace(History item)
         {
             int c = item.Col;
@@ -531,38 +439,25 @@ namespace MazeGame
             return false;
         }
 
-        /// <summary>
-        /// 경로 그리기
-        /// </summary>
-        private void DrawPath()
-        {
-            if (maze == null) return;
 
-            foreach (var item in Histories.Distinct())
+        private void DrawPath(Graphics g)
+        {
+            if (maze == null || Ground == null || histories == null) return;
+            List<Point> points = histories.DistinctBy(x => x.Point).Select(s => s.Point).ToList();
+            foreach (var point in points)
             {
-                var pan = new Panel
-                {
-                    Width = (int)maze.WallSize / 2,
-                    Height = (int)maze.WallSize / 2,
-                    Left = item.X + (int)maze.WallSize / 4,
-                    Top = item.Y + (int)maze.WallSize / 4,
-                    BackColor = Color.Magenta
-                };
-                Controls.Add(pan);
-                pan.BringToFront();
-                Graphics g = pan.CreateGraphics();
-                g.FillRectangle(Brushes.Yellow, item.X, item.Y, pan.Width, pan.Height);
-                pan.Refresh();
+                var w = (int)maze.WallSize / 2;
+                var h = (int)maze.WallSize / 2;
+                var x = (point.X - Ground.Left) + (int)maze.WallSize / 4;
+                var y = (point.Y - Ground.Top) + (int)maze.WallSize / 4;
+                g.FillRectangle(Brushes.Magenta, x, y, w, h);
             }
+
         }
 
-        /// <summary>
-        /// AI 반 자동 무빙
-        /// </summary>
-        /// <returns></returns>
         private async Task RunAiAsync()
         {
-            if (maze == null || Player == null || visited == null) return;
+            if (maze == null || Player == null || visited == null || histories == null) return;
 
             await Task.Run(() =>
             {
@@ -576,10 +471,8 @@ namespace MazeGame
                     {
                         MovePlayer(next);
                         visited[col, row] = true;
-                        Histories.Add(next);
-                        history.Add(new History(history.Count + 1, next, col, row));
+                        histories.Add(new History(histories.Count + 1, next, col, row));
                         counter++;
-
                         return;
                     }
                     else
@@ -597,8 +490,7 @@ namespace MazeGame
                     {
                         MovePlayer(next);
                         visited[col, row] = true;
-                        Histories.Add(next);
-                        history.Add(new History(history.Count + 1, next, col, row));
+                        histories.Add(new History(histories.Count + 1, next, col, row));
                         counter++;
                         return;
                     }
@@ -616,8 +508,7 @@ namespace MazeGame
                     {
                         MovePlayer(next);
                         visited[col, row] = true;
-                        Histories.Add(next);
-                        history.Add(new History(history.Count + 1, next, col, row));
+                        histories.Add(new History(histories.Count + 1, next, col, row));
                         counter++;
                         return;
                     }
@@ -636,8 +527,7 @@ namespace MazeGame
                     {
                         MovePlayer(next);
                         visited[col, row] = true;
-                        Histories.Add(next);
-                        history.Add(new History(history.Count + 1, next, col, row));
+                        histories.Add(new History(histories.Count + 1, next, col, row));
                         counter++;
                         return;
                     }
@@ -651,21 +541,16 @@ namespace MazeGame
             });
         }
 
-        /// <summary>
-        /// 완전 수동 무딩 키 핸들
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <param name="keyData"></param>
-        /// <returns></returns>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (maze == null || Player == null || visited == null) return base.ProcessCmdKey(ref msg, keyData);
+            if (maze == null || Player == null || visited == null || histories == null)
+                return base.ProcessCmdKey(ref msg, keyData);
 
             switch (keyData)
             {
                 case Keys.A:
                 case Keys.Left: // 좌
-                    { 
+                    {
                         int col = maze.playerPositions[0] -= 1;
                         int row = maze.playerPositions[1];
                         Point next = new(Player.Location.X - Convert.ToInt32(maze.WallSize), Player.Location.Y);
@@ -674,9 +559,7 @@ namespace MazeGame
                         {
                             MovePlayer(next);
                             visited[col, row] = true;
-                            Histories.Add(next);
-                            history.Add(new History(history.Count + 1, next, col, row));
-                            //counter++;
+                            histories.Add(new History(histories.Count + 1, next, col, row));
                         }
                         else
                             maze.playerPositions[0] += 1;
@@ -695,10 +578,7 @@ namespace MazeGame
                         {
                             MovePlayer(next);
                             visited[col, row] = true;
-                            Histories.Add(next);
-                            history.Add(new History(history.Count + 1, next, col, row));
-                            //counter++;
-
+                            histories.Add(new History(histories.Count + 1, next, col, row));
                         }
                         else
                             maze.playerPositions[0] -= 1;
@@ -717,9 +597,7 @@ namespace MazeGame
                         {
                             MovePlayer(next);
                             visited[col, row] = true;
-                            Histories.Add(next);
-                            history.Add(new History(history.Count + 1, next, col, row));
-                            //counter++;
+                            histories.Add(new History(histories.Count + 1, next, col, row));
 
                         }
                         else
@@ -739,9 +617,8 @@ namespace MazeGame
                         {
                             MovePlayer(next);
                             visited[col, row] = true;
-                            Histories.Add(next);
-                            history.Add(new History(history.Count + 1, next, col, row));
-                            //counter++;
+                            histories.Add(new History(histories.Count + 1, next, col, row));
+
                         }
                         else
                             maze.playerPositions[1] -= 1;
@@ -754,6 +631,88 @@ namespace MazeGame
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        private async void Button_Click(object? sender, EventArgs e)
+        {
+            if (sender is not Button btn) return;
+            if (labelMessage == null) return;
+
+            int tag = Convert.ToInt32(btn.Tag);
+
+            switch (tag)
+            {
+                case 0:
+                    {
+                        Controls.Add(Ground = new UPictureBox(groundSize, Ground_Paint));
+                        maze = new Maze(count, Ground.Height);
+                        await maze.RunAsync();
+                        CenterOfForm();
+                    }
+                    break;
+
+                case 1:
+                    {
+                        if (maze == null) return;
+
+                        Controls.Add(Player = new UPictureBox(Convert.ToInt32(maze.WallSize), Player_Paint));
+                        if (Ground == null) return;
+
+                        Player.Location
+                            = new Point(Ground.Location.X + Convert.ToInt32(maze.WallSize), Ground.Location.Y + Convert.ToInt32(maze.WallSize));
+
+                        Player.BringToFront();
+
+                        histories = [];
+                        histories.Add(new History(1, Player.Location, 1, 1));
+
+                        GetTrace();
+                        FinalDestination();
+                        visited = new bool[count, count];
+                        visited[1, 1] = true;
+                    }
+                    break;
+
+                case 2: // Start
+                    {
+                        visited = new bool[count, count];
+                        visited[1, 1] = true;
+                        timer = new System.Windows.Forms.Timer { Interval = 30 };
+                        timer.Tick += Timer_Tick;
+                        timer?.Start();
+                        IsStopped = false;
+                    }; break;
+
+                case 3:
+                    for (int i = 0; i < 29; i++)
+                        Goals($"Ball_{i % 10}.png");
+
+                    break;
+                case 4: RemoveMap(); break;
+                case 5:; break;
+                case 6: // Stop
+                    {
+                        IsStopped = true;
+                        timer?.Stop();
+                        timer = null;
+                    }
+                    break;
+                case 7:
+                    break;
+
+                case 8: // 경로그리기
+                    {
+                        if (Ground == null) return;
+                        isPath = true;
+                        Ground.Invalidate();
+                    }
+                    break;
+                case 9: Close(); return;
+                case 10: await RepeatSearch(); return;
+                default: break;
+            }
+
+        }
+
 
     }
 }
