@@ -12,8 +12,8 @@ namespace MazeGame
 
             ApplicationConfiguration.Initialize();
             // Application.Run(new MainForm());
-            // Application.Run(new MazePlayForm());
-            Application.Run(new MovementForm());
+            Application.Run(new MazePlayForm());
+            // Application.Run(new MovementForm());
         }
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
