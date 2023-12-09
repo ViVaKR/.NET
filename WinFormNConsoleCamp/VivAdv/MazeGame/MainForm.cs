@@ -23,11 +23,11 @@ namespace MazeGame
         private UPanel? board;
         private UPanel? monster;
 
-        // 몬스터 현재위치
+        // #플레이어 #현재위치
         public Point current;
         private int[] playerPositions = [1, 1];
 
-        // 벽사이즈
+        // #벽사이즈
         private int wallSize;
         public int WallSize
         {
@@ -94,7 +94,7 @@ namespace MazeGame
 
         public MainForm()
         {
-            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 
             InitializeComponent();
 
@@ -166,6 +166,9 @@ namespace MazeGame
 
         private async void Button_Click(object? sender, EventArgs e)
         {
+            // goto:#Hello
+
+
             if (sender is not Button btn) return;
             int tag = Convert.ToInt32(btn.Tag);
 
@@ -242,11 +245,19 @@ namespace MazeGame
                         shap.Show();
                     }
                     break;
+
+
             }
+            // #Hello
+
+            
+
         }
 
         private void GetTrace()
         {
+
+            
             if (Maze == null) return;
 
             wayToGo = null;
@@ -448,6 +459,7 @@ namespace MazeGame
                 }
             }
         }
+
 
         private async Task RunAsync()
         {
