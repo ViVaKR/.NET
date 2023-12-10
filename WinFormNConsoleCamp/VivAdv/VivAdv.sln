@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivCam", "VivCam\VivCam.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceShooter", "SpaceShooter\SpaceShooter.csproj", "{6A3F06F6-EBA7-4BEF-A87A-25ABAD4D86E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tetris", "Tetris\Tetris.csproj", "{034433B9-EB15-4979-89EC-86A965DA4C7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,14 @@ Global
 		{6A3F06F6-EBA7-4BEF-A87A-25ABAD4D86E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A3F06F6-EBA7-4BEF-A87A-25ABAD4D86E2}.Release|ARM64.ActiveCfg = Release|Any CPU
 		{6A3F06F6-EBA7-4BEF-A87A-25ABAD4D86E2}.Release|ARM64.Build.0 = Release|Any CPU
+		{034433B9-EB15-4979-89EC-86A965DA4C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{034433B9-EB15-4979-89EC-86A965DA4C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{034433B9-EB15-4979-89EC-86A965DA4C7B}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{034433B9-EB15-4979-89EC-86A965DA4C7B}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{034433B9-EB15-4979-89EC-86A965DA4C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{034433B9-EB15-4979-89EC-86A965DA4C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{034433B9-EB15-4979-89EC-86A965DA4C7B}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{034433B9-EB15-4979-89EC-86A965DA4C7B}.Release|ARM64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
