@@ -1,6 +1,6 @@
-﻿namespace PoopGame
+﻿namespace FortuneForm
 {
-    partial class MainSceen
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
@@ -30,12 +30,12 @@
         {
             this.SuspendLayout();
             // 
-            // MainSceen
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1338, 1052);
-            this.Name = "MainSceen";
+            this.ClientSize = new System.Drawing.Size(1234, 834);
+            this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
 
