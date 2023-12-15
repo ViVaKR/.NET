@@ -25,11 +25,11 @@ namespace WpfListView
 
         private void BtnDel_Click(object sender, RoutedEventArgs e)
         {
-            // by index
+            // (by index)
             //int idx = LsvEntries.SelectedIndex;
             //LsvEntries.Items.RemoveAt(idx);
 
-            // by item
+            // (by item)
             object item = LsvEntries.SelectedItem;
 
             var confirm = MessageBox.Show($"Are you sure you want to delete: `{item}`", "Confirm", MessageBoxButton.YesNo);

@@ -58,7 +58,7 @@
             x:Name="LsvEntries"
             Grid.Row="1"
             Grid.ColumnSpan="2"
-            FontSize="18"
+            FontSize="24"
             SelectionMode="Single" />
     </Grid>
 </Window>
