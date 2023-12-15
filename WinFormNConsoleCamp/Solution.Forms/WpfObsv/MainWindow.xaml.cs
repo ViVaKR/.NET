@@ -1,6 +1,5 @@
 ﻿
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 
 
@@ -22,17 +21,11 @@ namespace WpfObsv
 
         public MainWindow()
         {
-            
             DataContext = this;
-            
-            InitializeComponent();
-            entries = [];
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        }
 
-        private void BtnClear_Click(object sender, RoutedEventArgs e)
-        {
-            
+            entries = new ObservableCollection<string>();
+            InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -45,5 +38,11 @@ namespace WpfObsv
             string selectedItem = (string)LsvEntries.SelectedItem;
             Entries.Remove(selectedItem);
         }
+
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        {
+            Entries.Clear();
+        }
+
     }
 }
