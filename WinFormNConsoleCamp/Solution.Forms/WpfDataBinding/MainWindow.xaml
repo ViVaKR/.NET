@@ -26,18 +26,18 @@
         <Button
             x:Name="BtnSet"
             Grid.Row="1"
-            Width="100"
+            Width="80"
             Height="40"
             Click="BtnSet_Click"
             Content="Set" />
         <Button
             x:Name="BtnMessage"
             Grid.Row="1"
-            Width="100"
+            Width="80"
             Height="40"
-            Content="Message"
+            HorizontalAlignment="Right"
             Click="BtnMessage_Click"
-            HorizontalAlignment="Right" />
+            Content="Message" />
 
         <TextBlock
             x:Name="TxblResult"
