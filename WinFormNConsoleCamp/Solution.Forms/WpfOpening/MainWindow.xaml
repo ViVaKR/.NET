@@ -29,6 +29,7 @@
                 x:Name="TbInput"
                 Width="200"
                 Height="40"
+                VerticalContentAlignment="Center"
                 FontSize="20" />
         </StackPanel>
     </Grid>

@@ -21,11 +21,13 @@ namespace WpfOpening
 
         private void BtnModal_Click(object sender, RoutedEventArgs e)
         {
-            ModalWindow modal = new()
+            ModalWindow modal = new(this)
             {
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
+            Opacity = 0.4;
             modal.ShowDialog();
+            Opacity = 1.0;
             if (modal.Success)
             {
                 TbInput.Text = modal.Input ?? string.Empty;

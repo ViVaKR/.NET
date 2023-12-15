@@ -1,6 +1,7 @@
 ﻿
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace WpfOpening.View
 {
@@ -11,12 +12,12 @@ namespace WpfOpening.View
         [AllowNull]
         public string Input { get; set; }
 
-        public ModalWindow()
+        public ModalWindow(Window parentWindow)
         {
+            Owner = parentWindow;
+
             InitializeComponent();
         }
-
-
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
@@ -28,6 +29,13 @@ namespace WpfOpening.View
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void TbInput_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (sender is not TextBox textbox) return;
+
+            BtnOK.IsEnabled = !string.IsNullOrEmpty(textbox.Text);;
         }
     }
 }

@@ -16,6 +16,7 @@
                 x:Name="TbInput"
                 Width="200"
                 Height="40"
+                TextChanged="TbInput_TextChanged"
                 VerticalContentAlignment="Center"
                 Margin="5" />
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
@@ -24,6 +25,7 @@
                     Width="50"
                     Height="40"
                     Margin="2"
+                    IsEnabled="False"
                     Click="BtnOK_Click"
                     Content="OK" />
                 <Button
