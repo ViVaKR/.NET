@@ -1,5 +1,6 @@
 ﻿
 using System.Windows;
+using System.Windows.Media;
 using WpfOpening.View;
 
 namespace WpfOpening
@@ -9,7 +10,9 @@ namespace WpfOpening
         public MainWindow()
         {
             DataContext = this;
+
             InitializeComponent();
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
@@ -32,6 +35,17 @@ namespace WpfOpening
             {
                 TbInput.Text = modal.Input ?? string.Empty;
             }
+        }
+
+        private void BtnTopMost_Click(object sender, RoutedEventArgs e)
+        {
+            TopMostWindow topMost = new()
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Topmost = true,
+                Background = Brushes.DeepSkyBlue
+            };
+            topMost.Show();
         }
     }
 }

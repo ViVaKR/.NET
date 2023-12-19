@@ -8,9 +8,7 @@ namespace WpfOpening.View
     public partial class ModalWindow : Window
     {
         public bool Success { get; set; }
-
-        [AllowNull]
-        public string Input { get; set; }
+        public string? Input { get; set; }
 
         public ModalWindow(Window parentWindow)
         {
@@ -31,7 +29,7 @@ namespace WpfOpening.View
             Close();
         }
 
-        private void TbInput_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void TbInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (sender is not TextBox textbox) return;
 

@@ -23,7 +23,9 @@ namespace WpfMVVM.ViewModel
         }
 
         public RelayCommand AddCommand => new(execute => AddItem());
+
         public RelayCommand DeleteCommand => new(execute => DeleteItem(), canExecute => SelectedItem != null);
+
         public RelayCommand SaveCommand => new(execute => Save(), canExecute => CanSave());
 
         public MainWindowViewModel()
@@ -43,7 +45,7 @@ namespace WpfMVVM.ViewModel
 
         private void DeleteItem()
         {
-            Items?.Remove(SelectedItem);
+            _ = (Items?.Remove(SelectedItem));
         }
 
         private void Save()

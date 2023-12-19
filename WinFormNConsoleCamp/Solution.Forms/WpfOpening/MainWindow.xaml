@@ -25,6 +25,13 @@
                 Margin="5"
                 Click="BtnModal_Click"
                 Content="Modal" />
+            <Button
+                x:Name="BtnTopMost"
+                Width="100"
+                Height="40"
+                Margin="5"
+                Click="BtnTopMost_Click"
+                Content="Top Most" />
             <TextBox
                 x:Name="TbInput"
                 Width="200"

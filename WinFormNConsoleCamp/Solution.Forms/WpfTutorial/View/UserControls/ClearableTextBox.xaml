@@ -12,13 +12,12 @@
         <TextBox
             x:Name="TxbInput"
             VerticalAlignment="Center"
+            Background="Transparent"
             FontSize="16"
             FontWeight="Light"
-            Background="Transparent"
-            TextChanged="TxbInput_TextChanged"/>
+            TextChanged="TxbInput_TextChanged" />
         <TextBlock
             x:Name="TxblPlaceholder"
-            
             Margin="5,0,0,0"
             VerticalAlignment="Center"
             Panel.ZIndex="-1"
