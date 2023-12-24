@@ -1,5 +1,4 @@
 ﻿
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 
@@ -19,10 +18,9 @@ namespace WpfSockets.Libs
 
         public Socket? socket;
         private readonly ConnectCallback connectCallBack = callback;
-        public byte[]? buffer;
+        public byte[] buffer = new byte[8192];
         public bool isClosed = true;
         private IPEndPoint? remoteEndPoint;
-
         public string? saveFloder;
         public string? outputFloder;
 
@@ -30,8 +28,6 @@ namespace WpfSockets.Libs
 
         public void Connect(string host, int port)
         {
-            buffer = new byte[8192];
-
             socket = new(AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, ProtocolType.Tcp);
             socket.BeginConnect(host, port, ConnetionCallback, null);
         }
@@ -99,9 +95,17 @@ namespace WpfSockets.Libs
             }
         }
 
-        private void Run()
+        public void Run()
         {
-            
+            try
+            {
+                socket?.BeginReceive(buffer, 0, buffer.Length, SocketFlags.Peek, ReceiveCallback, null);
+            }
+            catch (SocketException ex)
+            {
+                Close();
+                throw new Exception(ex.Message);
+            }
         }
 
         private void Process()
@@ -120,8 +124,6 @@ namespace WpfSockets.Libs
                         long length = pr.ReadInt64();
 
                         TransferQueue queue = new();
-                        
-
                     }
                     break;
                 case Headers.Start:
@@ -147,7 +149,7 @@ namespace WpfSockets.Libs
                     socket?.Send(BitConverter.GetBytes(data.Length), 0, 4, SocketFlags.None);
                     socket?.Send(data, 0, data.Length, SocketFlags.None);
                 }
-                catch (Exception ex)
+                catch (SocketException ex)
                 {
                     throw new Exception(ex.Message);
                 }

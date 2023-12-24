@@ -37,8 +37,6 @@ namespace WpfSockets.Libs
 
                 Stop();
             }
-
-
         }
 
         private void Stop()
