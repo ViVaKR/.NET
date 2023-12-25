@@ -1,6 +1,6 @@
-﻿namespace Camp.DependencyInjection;
+﻿namespace Camp.Example;
 
-public class MessageWriter : IMessageWriter
+public class ConsoleMessageWriter : IMessageWriter
 {
     public void Write(string message)
     {
