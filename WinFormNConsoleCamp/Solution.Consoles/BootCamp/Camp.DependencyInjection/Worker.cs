@@ -1,18 +1,20 @@
+<<<<<<< HEAD
 ﻿
 using Microsoft.Extensions.Hosting;
 
+=======
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+>>>>>>> f9cb5cf873c4c1c8af334968e7f1853ade154855
 namespace Camp.DependencyInjection;
 
-public class Worker : BackgroundService
+public class Worker(ILogger<Worker> logger) : BackgroundService
 {
-    private readonly MessageWriter _messageWriter = new();
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken) 
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
-        {
-            _messageWriter.Write($"Worker running at: {DateTimeOffset.Now}");
-
+        {     
+            logger.LogInformation("Worker running at: {timer}", DateTimeOffset.Now);
             await Task.Delay(1_000, stoppingToken);
         }
     }

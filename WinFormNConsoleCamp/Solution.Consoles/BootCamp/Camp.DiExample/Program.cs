@@ -1,12 +1,14 @@
-﻿using Camp.DependencyInjection;
+﻿
+using Camp.DiExample;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-// IServiceCollection
 builder.Services.AddHostedService<Worker>();
-builder.Services.AddSingleton<IMessageWriter, LoggingMessageWriter>();
+builder.Services.TryAddSingleton<ILogWriter, LogWriter>();
 
 using IHost host = builder.Build();
-host.Run();
+
+await host.RunAsync();
