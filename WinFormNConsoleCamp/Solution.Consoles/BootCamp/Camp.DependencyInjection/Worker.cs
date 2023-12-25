@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Extensions.Hosting;
+
 namespace Camp.DependencyInjection;
 
 public class Worker : BackgroundService
