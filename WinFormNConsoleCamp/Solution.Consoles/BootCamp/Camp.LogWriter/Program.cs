@@ -12,4 +12,5 @@ ExampleService service = serviceProvider.GetRequiredService<ExampleService>();
 
 service.DoSomeWork(12, 45);
 
-Console.WriteLine("Hello, World");
+// Console.WriteLine("Hello, World");
+// 

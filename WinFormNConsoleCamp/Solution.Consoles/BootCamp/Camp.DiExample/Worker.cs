@@ -2,7 +2,7 @@
 
 namespace Camp.DiExample;
 
-public class Worker (ILogWriter logWriter) : BackgroundService
+public class Worker(ILogWriter logWriter) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
