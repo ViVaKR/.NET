@@ -34,3 +34,8 @@ Console.WriteLine($"{v3.X} {v3.Y} {v3.Z} {v3.Memo}");
     # 비 파괴적 변경 : with 식을 사용하여 비파괴적 변형을 구현
 
  */
+Console.WriteLine(p1.Y);
+
+Annotation r = new();
+
+r.Run(123, "Viv");
