@@ -54,5 +54,6 @@
 
 1. Attend the .NET Conf
 
+2. From Windows
 
 ## [Ref. IAMTIMCOREY.COM](https://iamtimcorey.com)
