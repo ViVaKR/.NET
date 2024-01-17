@@ -53,8 +53,8 @@
 ## HOW TO LEARN MORE
 
 1. Attend the .NET Conf
-
 2. From Windows
 3. From macOS
+4. Merged (2, 3)
 
 ## [Ref. IAMTIMCOREY.COM](https://iamtimcorey.com)
