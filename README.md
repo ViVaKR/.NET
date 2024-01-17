@@ -55,5 +55,6 @@
 1. Attend the .NET Conf
 
 2. From Windows
+3. From macOS
 
 ## [Ref. IAMTIMCOREY.COM](https://iamtimcorey.com)
