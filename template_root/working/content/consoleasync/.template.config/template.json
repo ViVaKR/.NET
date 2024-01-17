@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Kim Bum Jun<iam@kimbumjun.com>",
+    "classifications": [ "Common", "Console" ],
+    "identity": "VivTemplate.AsyncProject",
+    "name": "Viv templates: async project",
+    "shortName": "consoleasync",
+    "sourceName":"VivTemplate.AsyncProject",
+    "tags": {
+      "language": "C#",
+      "type": "project"
+    }
+  }
