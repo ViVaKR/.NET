@@ -53,6 +53,6 @@
 ## HOW TO LEARN MORE
 
 1. Attend the .NET Conf
-
+3. From macOS
 
 ## [Ref. IAMTIMCOREY.COM](https://iamtimcorey.com)
