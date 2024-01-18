@@ -57,7 +57,7 @@ namespace KeyHook
             }
             #endregion
         }
-        
+
         public KeyboardHook()
         {
             _currentId = 0;

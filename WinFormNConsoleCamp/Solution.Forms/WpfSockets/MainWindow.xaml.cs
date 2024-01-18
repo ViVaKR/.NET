@@ -117,7 +117,7 @@ namespace WpfSockets
         private void ConnectingCallback(object sender, string error)
         {
             // CheckAccess returns true if you're on the dispatcher thread
-            if (!Dispatcher.CheckAccess()) 
+            if (!Dispatcher.CheckAccess())
             {
                 Dispatcher.Invoke(new ConnectCallback(ConnectingCallback), sender, error);
                 return;
@@ -127,14 +127,14 @@ namespace WpfSockets
                 transferClient?.Close();
                 transferClient = null;
 
-                MessageBox.Show(error,"ERROR");
+                MessageBox.Show(error, "ERROR");
                 return;
             }
             if (transferClient == null) return;
             RegisterEvents();
             transferClient.outputFloder = outputFolder;
-            transferClient.b
-            
+
+
 
         }
 

@@ -41,7 +41,7 @@ namespace WpfSockets.Libs
                     QueueType = QueueType.Upload,
                     Fs = new FileStream(fileName, FileMode.Open),
                     Thrd = new Thread(TransferProc) { IsBackground = true }
-                    
+
                 };
                 queue.Length = queue.Fs.Length;
 
@@ -65,7 +65,7 @@ namespace WpfSockets.Libs
                     QueueType = QueueType.Download,
                     Fs = new FileStream(fileName, FileMode.Create),
                     Length = length
-                    
+
                 };
                 queue.Fs.SetLength(length);
 
@@ -140,10 +140,10 @@ namespace WpfSockets.Libs
                 if (obj == null)
                     throw new Exception("object is null");
 
-                TransferQueue queue = (TransferQueue)obj 
+                TransferQueue queue = (TransferQueue)obj
                     ?? throw new Exception("TransferQueue is null");
 
-                if (queue.Fs == null) 
+                if (queue.Fs == null)
                     throw new Exception("FileStream is null");
 
                 while (queue.Index < queue.Length)
@@ -166,7 +166,7 @@ namespace WpfSockets.Libs
 
                     queue.Progress = Convert.ToInt32((queue.Transferred / queue.Length) * 100);
 
-                    if(queue.LastProgress < queue.Progress)
+                    if (queue.LastProgress < queue.Progress)
                     {
                         queue.LastProgress = queue.Progress;
                         queue.Client?.ProgressStatus(queue);

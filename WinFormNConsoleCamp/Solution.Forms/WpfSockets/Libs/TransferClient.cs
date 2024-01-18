@@ -45,7 +45,7 @@ namespace WpfSockets.Libs
                 remoteEndPoint = (IPEndPoint)socket.RemoteEndPoint;
             }
             catch (Exception ex) { error = ex.Message; }
-                
+
 
             connectCallBack?.Invoke(this, error);
         }
@@ -74,7 +74,7 @@ namespace WpfSockets.Libs
 
                 int found = socket.EndReceive(ar);
 
-                if(found > 4)
+                if (found > 4)
                 {
                     socket.Receive(buffer ??= new byte[8192], 0, 4, SocketFlags.None);
                     int size = BitConverter.ToInt32(buffer, 0);

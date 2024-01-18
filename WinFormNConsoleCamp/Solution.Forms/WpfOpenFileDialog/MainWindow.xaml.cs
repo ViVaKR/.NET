@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using System.Text;
 using System.Windows;
 
 
@@ -11,7 +10,7 @@ namespace WpfOpenFileDialog
         {
             InitializeComponent();
 
-            
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             TbInfo.FontFamily = new System.Windows.Media.FontFamily("FiraCode Nerd Font Mono");

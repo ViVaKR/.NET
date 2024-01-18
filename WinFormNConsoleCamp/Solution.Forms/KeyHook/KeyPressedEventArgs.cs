@@ -5,7 +5,7 @@ namespace KeyHook
 {
     public class KeyPressedEventArgs : EventArgs
     {
-        public KeyModifiers Modifier { get; private set; } 
+        public KeyModifiers Modifier { get; private set; }
 
         public Keys Key { get; private set; }
 

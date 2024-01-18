@@ -15,8 +15,8 @@ namespace WpfDataBinding
         public string BoundText
         {
             get { return boundText; }
-            set 
-            { 
+            set
+            {
                 boundText = value;
                 OnPropertyChanged();
 
@@ -35,10 +35,10 @@ namespace WpfDataBinding
         {
             BoundText = $"Set from code {(int)'✴'}";
 
-            
+
         }
 
-        private void OnPropertyChanged([CallerMemberName]string? propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -48,7 +48,7 @@ namespace WpfDataBinding
             // MessageBox.Show("Could not open file", "ERROR",MessageBoxButton.OK, MessageBoxImage.Error);
 
             MessageBoxResult result = MessageBox.Show("Do you agree?", "Agreement", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            TxblResult.Text = result == MessageBoxResult.Yes ? "Agreed" : "Not agreed"; 
+            TxblResult.Text = result == MessageBoxResult.Yes ? "Agreed" : "Not agreed";
         }
     }
 }

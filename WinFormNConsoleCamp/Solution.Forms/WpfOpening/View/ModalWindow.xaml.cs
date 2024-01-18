@@ -1,6 +1,4 @@
-﻿
-using System.Diagnostics.CodeAnalysis;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace WpfOpening.View
@@ -33,7 +31,7 @@ namespace WpfOpening.View
         {
             if (sender is not TextBox textbox) return;
 
-            BtnOK.IsEnabled = !string.IsNullOrEmpty(textbox.Text);;
+            BtnOK.IsEnabled = !string.IsNullOrEmpty(textbox.Text); ;
         }
     }
 }
