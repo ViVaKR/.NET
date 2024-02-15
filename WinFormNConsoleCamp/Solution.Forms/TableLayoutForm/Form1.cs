@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -36,7 +37,68 @@ namespace TableLayoutForm
             Width = 1600;
             Height = 1000;
             StartPosition = FormStartPosition.CenterScreen;
+
+
+            var list = new List<int>();
+
+            list.Sort();
+            list.Sort();
         }
+
+        /*
+         
+        // (1) -> List.Sort();
+        Sort(0, Count, null);    
+
+        // (2) -> List.Sort
+        public void Sort(int index, int count, IComparer<T> comparer)
+        {
+            if (index < 0)
+            {
+                ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.index, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
+            }
+
+            if (count < 0)
+            {
+                ThrowHelper.ThrowArgumentOutOfRangeException(ExceptionArgument.count, ExceptionResource.ArgumentOutOfRange_NeedNonNegNum);
+            }
+
+            if (_size - index < count)
+            {
+                ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidOffLen);
+            }
+
+            Array.Sort(_items, index, count, comparer);
+            _version++;
+        }
+
+
+
+        // (3) -> Array.Sort
+        public static void Sort<T>(T[] array, int index, int length, IComparer<T> comparer)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException("array");
+            }
+
+            if (index < 0 || length < 0)
+            {
+                throw new ArgumentOutOfRangeException((length < 0) ? "length" : "index", Environment.GetResourceString("ArgumentOutOfRange_NeedNonNegNum"));
+            }
+
+            if (array.Length - index < length)
+            {
+                throw new ArgumentException(Environment.GetResourceString("Argument_InvalidOffLen"));
+            }
+
+            if (length > 1 && ((comparer != null && comparer != Comparer<T>.Default) || !TrySZSort(array, null, index, index + length - 1)))
+            {
+                ArraySortHelper<T>.Default.Sort(array, index, length, comparer);
+            }
+        }
+          
+         */
 
         private void Form1_Load(object sender, EventArgs e)
         {
