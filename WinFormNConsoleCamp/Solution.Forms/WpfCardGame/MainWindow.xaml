@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:WpfCardGame"
         mc:Ignorable="d"
         Title="MainWindow" Height="1024" Width="768">
-    <Grid Name="xGrid">
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="80*"/>
@@ -27,7 +28,7 @@
             VerticalContentAlignment="Center"
             FontSize="18"/>
 
-        <Label x:Name="Deck2" 
+        <Label x:Name="LlDeck2" 
                Grid.Row="0" Grid.Column="1"
                Content="DECK 2" 
                HorizontalAlignment="Center" 

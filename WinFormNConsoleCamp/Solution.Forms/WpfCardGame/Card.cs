@@ -10,7 +10,7 @@ namespace WpfCardGame;
     public enum Suits : long
     {
         하트 = '\u2661',
-        다이아몬드 = '\u2b26',
+        다이아몬드 = '\u2662',
         스페이드 = '\u2664',
         클로바 = '\u2667'
     }

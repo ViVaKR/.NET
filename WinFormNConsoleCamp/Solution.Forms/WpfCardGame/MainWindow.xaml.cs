@@ -4,8 +4,7 @@ using System.Windows.Input;
 
 namespace WpfCardGame
 {
-
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         /// <summary>
         /// 오른 쪽 덱 목록
@@ -32,6 +31,7 @@ namespace WpfCardGame
 
             RightCards = [];
             LeftCards = [];
+            
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             // 폼 로드 이벤트
@@ -47,13 +47,11 @@ namespace WpfCardGame
                 LeftDeckListBox.Height = RightDeckListBox.Height = Height - 200;
                 LeftDeckListBox.Width = RightDeckListBox.Width = Width / 2 - 24;
             };
-
-
-
         }
 
         /// <summary>
-        /// 카드 초기화, 새로운 반듯한 신카드
+        /// 카드 초기화,
+        /// 가즈런하고, 반듯한 신카드 만들기
         /// </summary>
         /// <returns></returns>
         private async Task ResetDeckAsync()
@@ -72,7 +70,7 @@ namespace WpfCardGame
             // 리스트 박스에 아이템 넣기
             SetItems();
 
-            // 타스크 종료 알림
+            // 타스크 종료
             await Task.CompletedTask;
         }
 
@@ -84,13 +82,16 @@ namespace WpfCardGame
         private async Task ShuffleCard(int suffleCount)
         {
             
-            for (var i = 0; i < suffleCount; i++)
+            for (var i = 0; i < suffleCount; i++) // 아래 카드 섞는 작업횟수
             {
                 var r = new Random();
 
                 for (var n = LeftCards.Count - 1; n >= 0; n--)
                 {
-                    var k = r.Next(n + 1);
+                    // Left Side Cards 가 52장 전체가 있어야 함.
+                    // 즉, 한장이라도 오른 쪽 덱으로 옮겼다면 랜덤 로직에서 오류 발생하므로
+                    // Shuffle Button 을 비활화 시키는 이유가 됨. (Dictionay Key Number)
+                    var k = r.Next(n + 1); 
                     (LeftCards[n], LeftCards[k]) = (LeftCards[k], LeftCards[n]);
                 }
             }
@@ -106,7 +107,7 @@ namespace WpfCardGame
         private void SetItems()
         {
             LeftDeckListBox.ItemsSource = LeftCards.Select(x => $"{x.Key,2}.\t[ {(char)x.Value.Suit} {x.Value.Suit} {(int)x.Value.Value} ]").ToList();
-            RightDeckListBox.ItemsSource = RightCards.Select(x => $"{x.Key,2}.\t[ {(char)x.Value.Suit} {x.Value.Suit} {(int)x.Value.Value} ]").ToList();
+            RightDeckListBox.ItemsSource = RightCards.Select(x => $"[ {(char)x.Value.Suit} {x.Value.Suit} {(int)x.Value.Value} ]").ToList();
         }
 
         private async void ReSetCard_Click(object sender, RoutedEventArgs e)
@@ -121,12 +122,16 @@ namespace WpfCardGame
         private async void ShuffleCard_Click(object sender, RoutedEventArgs e)
         {
             BtnReset.IsEnabled = !(BtnShuffle.IsEnabled = false);
+
             await ShuffleCard(ShuffleCount);
             
         }
 
-
-
+        /// <summary>
+        /// 카드 노놔 주기 시믈레이션..
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeftDeckListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender is not ListBox list) return;
@@ -135,11 +140,12 @@ namespace WpfCardGame
 
             if (item == null) return;
 
-            // ListBox 가 MultiColumn 이 아니므로 앞에 딕셔너리의 키값을 Split 하여 추출
+            // ListBox 가 MultiColumn 이 아니므로
+            // 모냥은 빠지지만, 앞에 숫자를 딕셔너리의 키값을 Split 하여 추출
             selectedIdx = Convert.ToInt32(item?.ToString()?.Split('.', StringSplitOptions.RemoveEmptyEntries)[0]);
             if (selectedIdx == null) return;
 
-            // 왼쪽 덱에서 해당 카드의 키값으로 추출
+            // 키값 추출
             KeyValuePair<int, Card>? s = LeftCards.FirstOrDefault(x => x.Key == selectedIdx);
             if (s == null) return;
 
@@ -153,6 +159,7 @@ namespace WpfCardGame
             SetItems();
 
             // 왼쪽 덱의 카드 수가 52장이 안될때 => Shuffle Button Disabled
+            // Shuffle logic 특성
             BtnReset.IsEnabled = !(BtnShuffle.IsEnabled = RightCards.Count == 0);
         }
 
