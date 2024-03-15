@@ -10,7 +10,7 @@
 
     # -- 토큰은 뒤 나타나는 모든 항목을 인수로 처리하고 이를 옵션으로 구문 분석하지 않도록 지시
     # dotnet ef 에서 사용하지 않는 추가 인수는 앱으로 전달됨
-    # 프로젝트에 대한 환경 지정 
+    # 프로젝트에 대한 환경 지정
     $ dotnet ef database update -- --environment Production
 
     $ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
@@ -25,13 +25,13 @@
 ```
 
 * Microsoft.EntityFrameworkCore.Tools Enables Commands
-  * Add-Migration
-  * Bundle-Migration
-  * Drop-Database
-  * Get-DbContext
-  * Get-Migration
-  * Optimize-DbContext
-  * Remove-Migration
-  * Scaffold-DbContext
-  * Script-Migration
-  * Update-Database
+    * Add-Migration
+    * Bundle-Migration
+    * Drop-Database
+    * Get-DbContext
+    * Get-Migration
+    * Optimize-DbContext
+    * Remove-Migration
+    * Scaffold-DbContext
+    * Script-Migration
+    * Update-Database

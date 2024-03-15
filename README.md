@@ -43,7 +43,6 @@
 6. QuickGrid
 7. Blazor Identity
 
-
 ## SUPPORT WINDOW
 
 .NET 6 - Support ends Nov. 12, 2024
@@ -58,3 +57,62 @@
 4. Merged (2, 3)
 
 ## [Ref. IAMTIMCOREY.COM](https://iamtimcorey.com)
+
+---
+
+## Safe sotrage of app secrets in ASP.NET Core
+
+>- File system path:
+
+    - macOS, Linux : `~/.microsoft/usersecrets/<user_secrets_id>/secrets.json`
+    - Windows : `%APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json`
+
+```bash
+
+# in project root (GUID, .csproj <UserSecretsId>)
+dotnet user-secrets init
+
+# Set a secret
+dotnet user-secrets set "Movies:ServiceApiKey" "12345"
+dotnet user-secrets set "Movies:ServiceApiKey" "12345" --project "C:\apps\WebApp1\src\WebApp1"
+
+# Read the secret via the Configuration API
+var builder = WebApplication.CreateBuilder(args);
+var movieApiKey = builder.Configuration["Movies:ServiceApiKey"];
+app.MapGet("/", () => movieApiKey);
+
+```
+
+>- Complete Connection String
+
+```json
+// remove db password
+{
+  "ConnectionStrings": {
+    "Movies": "Server=(localdb)\\mssqllocaldb;Database=Movie-1;User Id=johndoe;MultipleActiveResultSets=true"
+  }
+}
+```
+
+```bash
+# Set Database Password
+dotnet user-secrets set "DbPassword" "pass123"
+```
+
+```csharp
+
+// Create Connection string ...
+
+using System.Data.SqlClient;
+var builder = WebApplication.CreateBuilder(args);
+var conStrBuilder = new SqlConnectionStringBuilder( builder.Configuration.GetConnectionString("Movies"));
+conStrBuilder.Password = builder.Configuration["DbPassword"]; // Call
+var connection = conStrBuilder.ConnectionString;
+var app = builder.Build();
+app.MapGet("/", () => connection);
+app.Run();
+
+
+```
+
+---
