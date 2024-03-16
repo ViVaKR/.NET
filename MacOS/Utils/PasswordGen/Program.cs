@@ -15,14 +15,21 @@ var password = new Password(5, 20);
 List<string> passwords = [];
 
 for (int i = 0; i < count; i++)
-{
     passwords.Add(await password.CreatePasswordAsync());
-}
 
-File.WriteAllLines(fi.FullName, passwords, Encoding.UTF8);
+await File.WriteAllLinesAsync(fi.FullName, passwords, Encoding.UTF8);
+
+fi = new FileInfo(fi.FullName);
 
 if (fi.Exists)
 {
-    var text = File.ReadAllText(fi.FullName, Encoding.UTF8);
-    Console.WriteLine(text);
+    var text = await File.ReadAllTextAsync(fi.FullName, Encoding.UTF8);
+    await Console.Out.WriteLineAsync(text);
 }
+
+var runtimeInfo = System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier;
+var arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+
+Console.WriteLine($"RID: {runtimeInfo}, Architecture: {arch} ");
+
+//$ dotnet publish -c Release -r osx-arm64 --self-contained true

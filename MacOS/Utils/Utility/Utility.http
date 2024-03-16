@@ -1,0 +1,8 @@
+@Utility_HostAddress = http://localhost:5029
+
+GET {{Utility_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{Utility_HostAddress}}/echo

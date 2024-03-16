@@ -1,29 +1,15 @@
-﻿using System.Security.Principal;
-
-namespace PasswordGen;
+﻿namespace PasswordGen;
 
 public class Password
 {
-
-    // private const string upper = "ABCDEFGHJKLMNOPQRSTUVWXYZ"; // 5
-    // private const string lower = "abcdefghijklmnopqrstuvwxyz"; //5
-    // private const string numbers = "0123456789"; // 5
-    // private const string special = "!@#$%^&*?_-"; //5
-
-    private readonly int _count;
     private readonly Dictionary<string, string> chunk;
-
     private readonly char[] password;
     private readonly int length;
 
     public Password(int total, int count)
     {
-        _count = count;
-
         length = 4 * total;
-
         password = new char[length];
-
         chunk = new Dictionary<string, string>
         {
            {"upper", "ABCDEFGHJKLMNOPQRSTUVWXYZ"},
