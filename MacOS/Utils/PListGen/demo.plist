@@ -1,0 +1,24 @@
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>GroupName</key>
+        <string>staff</string>
+        <key>InitGroups</key>
+        <true/>
+        <key>KeepAlive</key>
+        <true/>
+        <key>Label</key>
+        <string>KimBumJunComWebApi</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/usr/local/share/dotnet/dotnet</string>
+            <string>kimbumjun.dll</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>UserName</key>
+        <string>vivakr</string>
+        <key>WorkingDirectory</key>
+        <string>/Users/vivakr/WebProject/11_kimbumjun.com-api/kimbumjun/bin/Release/net8.0/publish/</string>
+    </dict>
+</plist>

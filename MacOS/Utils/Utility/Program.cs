@@ -46,6 +46,6 @@ app.UseEndpoints(end =>
 
 });
 await app.MigrateDbAsync();
-
+app.MapGet("/hi", () => connectionString);
 app.Run();
 

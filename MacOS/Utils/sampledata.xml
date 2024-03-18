@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="book.xsl"?>
+<!DOCTYPE book [<!ENTITY h "hardcover">]>
+<!--Sample XML-->
+<book genre="novle" ISBM="1-8630-014">
+  <title>The Handmaid's Tale</title>
+  <style>&h;</style>
+  <price>19.85</price><![CDATA[Price 15% off!!]]></book>
