@@ -8,7 +8,8 @@ package todoit;
 
 service ToDoIt{
 
-    // Create
+    //===== C R U D =====//
+    //--> (C)reate
     rpc CreateToDo (CreateToDoRequest) returns (CreateToDoResponse) {
         option (google.api.http) = {
             post:"/v1/todo",
@@ -18,6 +19,7 @@ service ToDoIt{
 
     // Read single
     rpc ReadToDo (ReadToDoRequest) returns (ReadTodoResponse) {
+        // https://localhost:7117/v1/todo/2
         option (google.api.http) = {
             get:"/v1/todo/{id}"
         };

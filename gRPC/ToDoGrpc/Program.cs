@@ -4,6 +4,7 @@ using ToDoGrpc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// DI
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlite("Data Source=ToDoDatabase.db"));
 
 // Add services to the container.

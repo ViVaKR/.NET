@@ -5,29 +5,16 @@ namespace ToDoGrpc.Services;
 
 public class ToDoService(AppDbContext Db) : ToDoIt.ToDoItBase
 {
-    public override async Task<CreateToDoResponse> CreateToDo(CreateToDoRequest request, ServerCallContext context)
-    {
-        if (string.IsNullOrEmpty(request.Title) || string.IsNullOrEmpty(request.Description))
-            throw new RpcException(new Status(StatusCode.InvalidArgument, "You must supply a valid object"));
-
-        var toDoItem = new ToDoItem
-        {
-            Title = request.Title,
-            Description = request.Description
-        };
-
-        await Db.AddAsync(toDoItem);
-        await Db.SaveChangesAsync();
-
-        return await Task.FromResult(new CreateToDoResponse { Id = toDoItem.Id });
-    }
-
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public override async Task<GetAllResponse> ListToDo(GetAllRequest request, ServerCallContext context)
     {
         var res = new GetAllResponse();
-
         var toDoItems = await Db.ToDoItems.ToListAsync();
-
         foreach (var toDoItem in toDoItems)
         {
             res.ToDo.Add(new ReadTodoResponse
@@ -59,6 +46,25 @@ public class ToDoService(AppDbContext Db) : ToDoIt.ToDoItBase
 
         throw new RpcException(new Status(StatusCode.NotFound, $"No Task with Id: {request.Id}"));
     }
+
+    public override async Task<CreateToDoResponse> CreateToDo(CreateToDoRequest request, ServerCallContext context)
+    {
+        if (string.IsNullOrEmpty(request.Title) || string.IsNullOrEmpty(request.Description))
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "You must supply a valid object"));
+
+        var toDoItem = new ToDoItem
+        {
+            Title = request.Title,
+            Description = request.Description
+        };
+
+        await Db.AddAsync(toDoItem);
+        await Db.SaveChangesAsync();
+
+        return await Task.FromResult(new CreateToDoResponse { Id = toDoItem.Id });
+    }
+
+
 
     public override async Task<UpdateToDoResponse> UpdateToDo(UpdateToDoRequest request, ServerCallContext context)
     {
