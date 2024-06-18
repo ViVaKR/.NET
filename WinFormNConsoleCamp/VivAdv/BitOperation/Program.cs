@@ -4,15 +4,29 @@
 
 // 0 0 0 1 (1)
 // 0 1 1 1 (7)
+using System.Diagnostics;
+
+byte[] arrA = [0xFF, 0xFF, 0xFF, 0xFC];
+
+byte[] arrB = [0b_1111_1100, 0b_1111_1111, 0b_1111_1111, 0b_1111_1111];
+
+uint m = 0xFFCCBBAA;
+uint md = 42_9160_7466; //== 0xFFCCBBAA
+
+var ms = md.ToString("X");
+Debug.WriteLine(ms);
+int decValue = int.Parse(ms, System.Globalization.NumberStyles.HexNumber);
+
 
 int min = int.MinValue;
-Console.WriteLine(Convert.ToString(min, toBase: 2));
+Debug.WriteLine(Convert.ToString(min, toBase: 2));
 
 int max = int.MaxValue;
-Console.WriteLine(Convert.ToString(max, toBase: 2));
+Debug.WriteLine(Convert.ToString(max, toBase: 2)); // 7F FF FF FF
 
-int bmin = byte.MinValue;
-Console.WriteLine(Convert.ToString(bmin, toBase: 2));
+sbyte minByte = sbyte.MinValue; // -128, byte Min: 0
+// 1111_1111_1000_0000
+Debug.WriteLine(Convert.ToString(minByte, toBase: 2));
 
 int a = 0b_1101;
 Console.WriteLine(Convert.ToString(a, toBase: 2));
@@ -155,7 +169,6 @@ static int UpdateBit(int num, int i, bool val)
     return (num & ~(1 << i)) | ((val ? 1 : 0) << i);
 }
 #endregion
-
 
 #region 부동소수점
 

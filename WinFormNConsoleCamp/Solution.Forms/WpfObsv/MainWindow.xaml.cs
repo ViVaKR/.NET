@@ -15,7 +15,6 @@ namespace WpfObsv
             set
             {
                 entries = value;
-
             }
         }
 
@@ -23,8 +22,10 @@ namespace WpfObsv
         {
             DataContext = this;
 
-            entries = new ObservableCollection<string>();
+            entries = [];
+
             InitializeComponent();
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 

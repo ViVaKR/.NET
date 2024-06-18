@@ -1,23 +1,20 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FormControls
 {
     public partial class MainForm : Form
     {
-
         private Panel panel;
         private DataGridView grid;
-
         private readonly List<Student> students;
 
         public MainForm()
         {
             InitializeComponent();
+
+            DoubleBuffered = true;
 
             Width = 2048;
             Height = 1600;
@@ -37,10 +34,7 @@ namespace FormControls
                     
                 });
 
-                // 데이터 그리드 뷰 컨트롤을 이용한 
-                // 데이터바인딩시 속성 활용 데모
-                // 문의에 대한 답변 파트
-                panel.Controls.Add(grid = new DataGridView
+                panel.Controls.Add(grid = new VivGrid
                 {
                     Dock=  DockStyle.Fill,
                     ColumnHeadersHeight = 24,
@@ -49,7 +43,6 @@ namespace FormControls
                 });
 
                 SeedData(); // 시드 데이터
-
                 grid.AutoResizeColumnHeadersHeight();
             };
         }

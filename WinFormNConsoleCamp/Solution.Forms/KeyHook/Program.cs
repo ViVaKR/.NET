@@ -15,5 +15,7 @@ namespace KeyHook
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+
+
     }
 }

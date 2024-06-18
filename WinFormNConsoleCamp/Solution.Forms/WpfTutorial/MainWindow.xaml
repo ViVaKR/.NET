@@ -25,6 +25,7 @@
             Grid.Row="1"
             Width="250"
             Height="40"
+           
             Placeholder="First Name" />
         <userControls:ClearableTextBox
             x:Name="Tb2"
