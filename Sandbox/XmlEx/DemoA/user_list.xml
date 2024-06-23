@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<user_list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <user>
+    <id>1</id>
+    <name>Alice</name>
+  </user>
+  <user>
+    <id>2</id>
+    <name>Bob</name>
+  </user>
+  <user>
+    <id>3</id>
+    <name>Charlie</name>
+  </user>
+</user_list>
