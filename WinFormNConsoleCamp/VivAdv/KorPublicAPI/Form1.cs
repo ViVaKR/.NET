@@ -25,7 +25,7 @@ namespace KorPublicAPI
             WindowState = FormWindowState.Maximized; // 폼을 최대화한다.
             Controls.Add(view = new MyGridView()); // RichTextBox 컨트롤을 추가한다.
             baseUrl = "http://apis.data.go.kr/B552061/jaywalking/getRestJaywalking"; // URL
-            serviceKey =...,
+            serviceKey = "thZTFQZO2a7WfAp0knA%2FH3lJetId1vnZUbrtxtiEDxFA4qJ%2F4JCsJbIXqWDqXFriLeye7SZNYo38xPtEOf1tCQ%3D%3D";
             year = 2015; // 연도, 사용자로 부터 받아올 수 있음.
 
             RunAsync(); // (1) 버튼 클릭 등의 트리거 이벤트로 시작할 수 있음.
@@ -37,7 +37,6 @@ namespace KorPublicAPI
         public async void RunAsync()
         {
             var resData = await GetAsync(); // 비동기로 데이터를 가져온다.
-            Debug.WriteLine(resData);
             XDocument? xdoc = XDocument.Parse(resData); // XML 데이터를 파싱한다.
             if(xdoc == null) return; // XML 데이터가 없으면 리턴한다.
             if(xdoc.Root == null) return; // XML 데이터의 루트가 없으면 리턴한다.
