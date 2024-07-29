@@ -13,9 +13,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<LearnDataContext>(x=> x.UseSqlServer(builder.Configuration.GetConnectionString("ViVaKRConnection")));
+builder.Services.AddDbContext<LearnDataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("ViVaKRConnection")));
 
-// ÀÇÁ¸¼º ÁÖÀÔ 3°¡Áö ¹æ½Ä ¿¹½Ã
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 // (1) DI e.g.`Transient` <Interface, Implement>
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 
@@ -38,12 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Middlewares : ¼ø¼­°¡ ¸Å¿ì Áß¿äÇÔ
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
