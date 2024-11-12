@@ -8,3 +8,14 @@
 6. Documentation
 7. Best Practices
 8. Cross-Domain Applicablility
+
+## OOP
+
+>- Object-Orented Programming Principles
+
+- Encapsulation
+- Abastraction
+- Inhreitance
+- Polymorphism
+- Coupling
+- Composition
