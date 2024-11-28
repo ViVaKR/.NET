@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VivRPG", "VivRPG\VivRPG.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QnA", "QnA\QnA.csproj", "{EC0A5248-DF45-409C-8076-B0E98C9452DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingCheck", "PingCheck\PingCheck.csproj", "{EEB2D514-67AD-4148-B210-3B2725EDA64E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{EC0A5248-DF45-409C-8076-B0E98C9452DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC0A5248-DF45-409C-8076-B0E98C9452DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC0A5248-DF45-409C-8076-B0E98C9452DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB2D514-67AD-4148-B210-3B2725EDA64E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB2D514-67AD-4148-B210-3B2725EDA64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB2D514-67AD-4148-B210-3B2725EDA64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB2D514-67AD-4148-B210-3B2725EDA64E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
