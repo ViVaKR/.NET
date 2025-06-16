@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Com.ViVaKR.Forms", "Com.ViVaKR.Forms\Com.ViVaKR.Forms.csproj", "{9B65547A-2286-4BAE-8689-72DE274F1A21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B65547A-2286-4BAE-8689-72DE274F1A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B65547A-2286-4BAE-8689-72DE274F1A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B65547A-2286-4BAE-8689-72DE274F1A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B65547A-2286-4BAE-8689-72DE274F1A21}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C310A0E-62E6-46FA-B696-5BEA8851BC89}
+	EndGlobalSection
+EndGlobal
