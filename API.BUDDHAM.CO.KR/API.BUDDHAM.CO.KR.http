@@ -1,0 +1,6 @@
+@API.BUDDHAM.CO.KR_HostAddress = http://localhost:5227
+
+GET {{API.BUDDHAM.CO.KR_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
