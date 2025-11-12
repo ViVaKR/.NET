@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Viv (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Viv (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
