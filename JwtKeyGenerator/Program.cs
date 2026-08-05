@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 Console.WriteLine("=== HMAC-SHA512 JWT Secret Key 생성기 ===\n");
