@@ -18,9 +18,6 @@ while (true)
 
     // 경과 시간이 1/30 초보다 작다면?
     if (currentTick - lastTick < waitTick) continue;
-
-
-
     lastTick = currentTick;
 
     // 1) 사용자 입력 대기

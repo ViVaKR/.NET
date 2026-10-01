@@ -1,130 +1,117 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace MazeConsoleGame;
 
-namespace MazeConsoleGame
+public class Board
 {
-    public class Board
+    public Player? _player;
+    public TileType[,]? _tile;
+    const char circle = '\u25cf';
+    public int _size;
+
+    public void InitializeBoard(int size, Player player)
     {
-        public Player? _player;
-        public TileType[,]? _tile;
+        if (size % 2 == 0) return;
 
-        const char circle = '\u25cf';
+        _player = player;
+        _size = size;
+        CreateMaze();
+    }
 
-
-        public int _size;
-
-        public void InitializeBoard(int size, Player player)
+    private void CreateMaze()
+    {
+        _tile = new TileType[_size, _size];
+        for (int row = 0; row < _size; row++)
         {
-            if (size % 2 == 0) return;
-
-            _player = player;
-            _size = size;
-
-            CreateMaze();
-        }
-
-        private void CreateMaze()
-        {
-            _tile = new TileType[_size, _size];
-
-            for (int row = 0; row < _size; row++)
+            for (int col = 0; col < _size; col++)
             {
-                for (int col = 0; col < _size; col++)
-                {
-                    _tile[row, col] =
-                        (row % 2 == 0 || col % 2 == 0)
-                        ? TileType.Wall
-                        : TileType.Empty;
-                }
-            }
-            for (int row = 0; row < _size; row++)
-            {
-                int count = 1;
-
-                for (int col = 0; col < _size; col++)
-                {
-                    if (row % 2 == 0 || col % 2 == 0) continue;
-
-                    if (row == _size - 2 && col == _size - 2) continue;
-
-                    if (row == _size - 2)
-                    {
-                        _tile[row, col + 1] = TileType.Empty;
-                        continue;
-                    }
-
-                    if (col == _size - 2)
-                    {
-                        _tile[row + 1, col] = TileType.Empty;
-                        continue;
-                    }
-
-                    var random = new Random();
-
-                    if (random.Next(0, 2) == 0)
-                    {
-                        _tile[row, col + 1] = TileType.Empty;
-                        count++;
-                    }
-                    else
-                    {
-                        int idx = random.Next(0, count);
-                        _tile[row + 1, col - idx * 2] = TileType.Empty;
-                        count = 1;
-                    }
-                }
+                _tile[row, col] =
+                    (row % 2 == 0 || col % 2 == 0)
+                    ? TileType.Wall
+                    : TileType.Empty;
             }
         }
-
-        private static ConsoleColor GetTileColor(TileType type)
+        for (int row = 0; row < _size; row++)
         {
-            return type switch
+            int count = 1;
+
+            for (int col = 0; col < _size; col++)
             {
-                TileType.Empty => ConsoleColor.Green,
-                TileType.Wall => ConsoleColor.Red,
-                _ => ConsoleColor.Green,
-            };
-        }
+                if (row % 2 == 0 || col % 2 == 0) continue;
 
-        public void Render()
-        {
-            if (_tile == null || _player == null) return;
+                if (row == _size - 2 && col == _size - 2) continue;
 
-            ConsoleColor preColor = Console.ForegroundColor;
-
-            for (int row = 0; row < _size; row++)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-
-                for (int col = 0; col < _size; col++)
+                if (row == _size - 2)
                 {
-                    if (row == _player.PosRow && col == _player.PosCol)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = GetTileColor(_tile[row, col]);
-                    }
-                    Console.Write($"{circle} ");
+                    _tile[row, col + 1] = TileType.Empty;
+                    continue;
                 }
 
-                Console.WriteLine();
+                if (col == _size - 2)
+                {
+                    _tile[row + 1, col] = TileType.Empty;
+                    continue;
+                }
 
+                var random = new Random();
+
+                if (random.Next(0, 2) == 0)
+                {
+                    _tile[row, col + 1] = TileType.Empty;
+                    count++;
+                }
+                else
+                {
+                    int idx = random.Next(0, count);
+                    _tile[row + 1, col - idx * 2] = TileType.Empty;
+                    count = 1;
+                }
             }
-
-            Console.ForegroundColor = preColor;
         }
     }
 
-
-    public enum TileType
+    private static ConsoleColor GetTileColor(TileType type)
     {
-        Empty,
-        Wall
+        return type switch
+        {
+            TileType.Empty => ConsoleColor.Green,
+            TileType.Wall => ConsoleColor.Red,
+            _ => ConsoleColor.Green,
+        };
     }
+
+    public void Render()
+    {
+        if (_tile == null || _player == null) return;
+
+        ConsoleColor preColor = Console.ForegroundColor;
+
+        for (int row = 0; row < _size; row++)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            for (int col = 0; col < _size; col++)
+            {
+                if (row == _player.PosRow && col == _player.PosCol)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                }
+                else
+                {
+                    Console.ForegroundColor = GetTileColor(_tile[row, col]);
+                }
+                Console.Write($"{circle} ");
+            }
+
+            Console.WriteLine();
+
+        }
+
+        Console.ForegroundColor = preColor;
+    }
+}
+
+
+public enum TileType
+{
+    Empty,
+    Wall
 }
