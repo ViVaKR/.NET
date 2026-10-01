@@ -6,10 +6,8 @@ var message = isConnected ? "Connected" : "Disconnected";
 Console.WriteLine($"Internet is {message}");
 
 /// <summary>
-/// 인터넷 연결여부 확인
+/// 인터넷 연결
 /// </summary>
-/// <param name="url">IP Address or DNS Domain</param>
-/// <returns></returns>
 static Task<bool> IsInternetConnected(string url)
 {
     return Task.Run(() =>

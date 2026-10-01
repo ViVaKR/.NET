@@ -1,10 +1,3 @@
-using AutoMapper;
-using LearnAPI.Container;
-using LearnAPI.Helper;
-using LearnAPI.Repos;
-using LearnAPI.Service;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,7 +8,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<LearnDataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("ViVaKRConnection")));
 
-// ������ ���� 3���� ��� ����
 // (1) DI e.g.`Transient` <Interface, Implement>
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 

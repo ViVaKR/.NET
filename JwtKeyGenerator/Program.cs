@@ -28,6 +28,7 @@ static string GenerateSafeJwtKey(int length = 129)
     // 안전한 문자 집합 (-, _ 제외)
     const string safeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+    Console.WriteLine($"=> {safeChars.Length}");
     var result = new StringBuilder(length);
     var randomBytes = new byte[length];
 
